@@ -4,7 +4,7 @@ Welcome to my personal website! This project is a custom-built web portal featur
 
 ## 🚀 Live Demo
 You can view my website live here: 
-`https://nidh2504-prog.github.io/kavishfortech.githhub.io
+`https://nidh2504-prog.github.io/kavishfortech
 
 ## 👤 About Me
 * **Name:** Kavish Shah
