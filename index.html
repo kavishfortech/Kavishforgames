@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kavish Shah - 6th Grader</title>
+    <style>
+        :root {
+            --red: #ff4d4d;
+            --blue: #4d94ff;
+            --bg: #f4f7f6;
+        }
+        body { font-family: 'Arial Black', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        
+        /* Header Section */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin-right: 40px;
+            border: 6px solid #333;
+        }
+        .text-info h1 { font-size: 3.5rem; margin: 0; color: #222; }
+        .text-info p { font-size: 1.5rem; color: #666; margin: 5px 0; }
+
+        /* Ludo Layout */
+        .ludo-container {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+        #ludo-board {
+            display: grid;
+            grid-template-columns: repeat(6, 50px);
+            grid-template-rows: repeat(6, 50px);
+            gap: 5px;
+            margin: 20px auto;
+            background: #333;
+            padding: 10px;
+            width: fit-content;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .piece { width: 35px; height: 35px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .red-p { background: var(--red); }
+        .blue-p { background: var(--blue); }
+        
+        .turn-indicator { font-size: 1.2rem; margin-bottom: 10px; font-weight: bold; }
+        .red-turn { color: var(--red); }
+        .blue-turn { color: var(--blue); }
+
+        /* Other Games */
+        .other-games { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .mini-card { background: white; padding: 15px; border-radius: 15px; text-align: center; width: 300px; }
+        canvas { background: #000; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="profile-header">
+    <img src="image.png" alt="Kavish Shah" class="profile-pic">
+    <div class="text-info">
+        <h1>KAVISH SHAH</h1>
+        <p>6TH GRADER</p>
+    </div>
+</div>
+
+<div class="ludo-container">
+    <h2>2-Player Ludo (Red vs Blue)</h2>
+    <div id="turn-text" class="turn-indicator red-turn">Red's Turn</div>
+    <div id="ludo-board"></div>
+    <div style="font-size: 40px;" id="ludo-dice">🎲</div>
+    <button onclick="rollLudo()" id="roll-btn" style="padding:10px 20px; font-size:18px; cursor:pointer;">Roll Dice</button>
+</div>
+
+<div class="other-games">
+    <div class="mini-card">
+        <h3>Snake Game</h3>
+        <canvas id="snakeGame" width="250" height="250"></canvas>
+    </div>
+    <div class="mini-card">
+        <h3>Minesweeper</h3>
+        <div id="mines-grid" style="display:grid; grid-template-columns:repeat(5, 40px); gap:5px; justify-content:center;"></div>
+    </div>
+</div>
+
+<script>
+    // LUDO LOGIC
+    let turn = 'red';
+    let diceVal = 0;
+    let redPos = 0;
+    let bluePos = 35; // Start blue at opposite side
+    const boardSize = 36;
+    const boardEl = document.getElementById('ludo-board');
+
+    function createBoard() {
+        boardEl.innerHTML = '';
+        for(let i=0; i<boardSize; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            if(i === redPos) cell.innerHTML = '<div class="piece red-p" onclick="movePiece(\'red\')"></div>';
+            if(i === bluePos) cell.innerHTML = '<div class="piece blue-p" onclick="movePiece(\'blue\')"></div>';
+            boardEl.appendChild(cell);
+        }
+    }
+
+    function rollLudo() {
+        diceVal = Math.floor(Math.random() * 6) + 1;
+        document.getElementById('ludo-dice').innerText = ['🎲','⚀','⚁','⚂','⚃','⚄','⚅'][diceVal];
+        document.getElementById('roll-btn').disabled = true;
+    }
+
+    function movePiece(player) {
+        if(diceVal === 0) return;
+        if(player !== turn) return;
+
+        if(player === 'red') {
+            redPos = (redPos + diceVal) % boardSize;
+            turn = 'blue';
+            document.getElementById('turn-text').innerText = "Blue's Turn";
+            document.getElementById('turn-text').className = "turn-indicator blue-turn";
+        } else {
+            bluePos = (bluePos + diceVal) % boardSize;
+            turn = 'red';
+            document.getElementById('turn-text').innerText = "Red's Turn";
+            document.getElementById('turn-text').className = "turn-indicator red-turn";
+        }
+        
+        diceVal = 0;
+        document.getElementById('roll-btn').disabled = false;
+        createBoard();
+    }
+    createBoard();
+
+    // MINESWEEPER SIMPLE
+    const mGrid = document.getElementById('mines-grid');
+    for(let i=0; i<25; i++) {
+        const btn = document.createElement('button');
+        btn.style.width = '40px'; btn.style.height = '40px';
+        btn.onclick = () => btn.innerText = Math.random() > 0.8 ? '💣' : '🚩';
+        mGrid.appendChild(btn);
+    }
+
+    // SNAKE SIMPLE
+    const canvas = document.getElementById("snakeGame");
+    const ctx = canvas.getContext("2d");
+    let snake = [{x:10, y:10}];
+    setInterval(() => {
+        ctx.fillStyle = "black"; ctx.fillRect(0,0,250,250);
+        ctx.fillStyle = "lime";
+        snake.forEach(s => ctx.fillRect(s.x, s.y, 10, 10));
+    }, 100);
+</script>
+
+</body>
+</html>
