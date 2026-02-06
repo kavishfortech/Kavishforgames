@@ -12,262 +12,249 @@
             --neon-green: #39ff14;
             --neon-pink: #ff00ea;
             --neon-red: #ff3131;
-            --bg-black: #08080c;
-            --panel-bg: rgba(15, 15, 25, 0.95);
-            --font-main: 'JetBrains Mono', monospace;
-            --font-head: 'Syncopate', sans-serif;
+            --bg-black: #050508;
+            --panel-bg: rgba(10, 10, 15, 0.98);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        /* Prevent scrolling on mobile when swiping the game */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; padding: 0; 
+            outline: none; 
+            touch-action: manipulation;
+        }
 
         body {
-            font-family: var(--font-main);
+            font-family: 'JetBrains Mono', monospace;
             background: var(--bg-black);
             color: #fff;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 2px 2px, rgba(0, 242, 255, 0.05) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
-
-        /* --- THE COLOR CHANGING NAME BOX (HEADER) --- */
-        .color-box-header {
-            width: 100%;
-            padding: 100px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #000;
-            border-bottom: 3px solid var(--neon-blue);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .name-box {
-            padding: 40px 80px;
-            border: 5px solid var(--neon-blue);
-            border-radius: 20px;
-            text-align: center;
-            position: relative;
-            animation: colorShift 8s infinite linear;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 5;
-        }
-
-        @keyframes colorShift {
-            0% { border-color: var(--neon-blue); box-shadow: 0 0 40px var(--neon-blue); }
-            33% { border-color: var(--neon-pink); box-shadow: 0 0 40px var(--neon-pink); }
-            66% { border-color: var(--neon-green); box-shadow: 0 0 40px var(--neon-green); }
-            100% { border-color: var(--neon-blue); box-shadow: 0 0 40px var(--neon-blue); }
-        }
-
-        .name-box h1 {
-            font-family: var(--font-head);
-            font-size: 5rem;
-            margin: 0;
-            letter-spacing: -5px;
-            text-transform: uppercase;
-            animation: textGlow 8s infinite linear;
-        }
-
-        @keyframes textGlow {
-            0% { color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue); }
-            33% { color: var(--neon-pink); text-shadow: 0 0 20px var(--neon-pink); }
-            66% { color: var(--neon-green); text-shadow: 0 0 20px var(--neon-green); }
-            100% { color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue); }
-        }
-
-        .tagline {
-            display: block;
-            font-size: 1.2rem;
-            margin-top: 15px;
-            letter-spacing: 12px;
-            color: #fff;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-
-        /* --- DASHBOARD GRID --- */
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 50px;
-            padding: 80px 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .engine-card {
-            background: var(--panel-bg);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 40px;
-            padding: 50px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-            backdrop-filter: blur(15px);
-            position: relative;
         }
 
-        .engine-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(0,242,255,0.05) 0%, transparent 50%);
-            pointer-events: none; border-radius: 40px;
+        /* --- THE DYNAMIC COLOR BOX --- */
+        .header-container {
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            background: #000;
+            border-bottom: 2px solid var(--neon-blue);
+        }
+
+        .animated-name-box {
+            padding: 30px 50px;
+            border: 4px solid var(--neon-blue);
+            border-radius: 15px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.9);
+            animation: borderFlow 6s infinite alternate;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        @keyframes borderFlow {
+            0% { border-color: var(--neon-blue); box-shadow: 0 0 30px var(--neon-blue); }
+            50% { border-color: var(--neon-pink); box-shadow: 0 0 30px var(--neon-pink); }
+            100% { border-color: var(--neon-green); box-shadow: 0 0 30px var(--neon-green); }
+        }
+
+        .animated-name-box h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(1.5rem, 8vw, 4rem);
+            letter-spacing: -2px;
+            animation: textFlow 6s infinite alternate;
+        }
+
+        @keyframes textFlow {
+            0% { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
+            50% { color: var(--neon-pink); text-shadow: 0 0 15px var(--neon-pink); }
+            100% { color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
+        }
+
+        /* --- RESPONSIVE DASHBOARD GRID --- */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Horizontal/Landscape adjustments */
+        @media (orientation: landscape) and (max-height: 600px) {
+            .dashboard { grid-template-columns: 1fr 1fr; }
+            .header-container { padding: 15px; }
+            .animated-name-box { padding: 10px; }
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .card-title {
-            font-family: var(--font-head);
-            font-size: 1.5rem;
-            margin-bottom: 40px;
+            font-size: 1rem;
             color: var(--neon-blue);
-            width: 100%;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 20px;
-        }
-
-        /* --- SNAKE VORTEX SYSTEM --- */
-        .viewport {
-            border: 5px solid #1a1a1a;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 0 20px #000;
-        }
-
-        canvas { background: #000; display: block; }
-
-        .stat-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            margin: 25px 0;
-            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
             font-weight: 800;
         }
 
-        .score-val { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-
-        .d-pad {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 15px; margin-top: 30px;
+        /* --- SNAKE ENGINE STYLING --- */
+        .game-area {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            aspect-ratio: 1/1;
+            background: #000;
+            border: 3px solid #222;
+            border-radius: 10px;
         }
 
-        .btn-ctrl {
-            width: 80px; height: 80px; background: #111;
-            border: 2px solid var(--neon-blue); color: #fff;
-            border-radius: 20px; font-size: 28px; cursor: pointer;
-            transition: 0.2s;
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
         }
-        .btn-ctrl:active { background: var(--neon-blue); color: #000; transform: scale(0.9); }
 
-        /* --- MINESWEEPER SYSTEM --- */
+        .score-row {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 1.2rem;
+            color: var(--neon-green);
+        }
+
+        /* --- MOBILE CONTROLS --- */
+        .mobile-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .ctrl-btn {
+            width: 60px; height: 60px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--neon-blue);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* --- MINESWEEPER GRID --- */
         .m-grid {
-            display: grid; grid-template-columns: repeat(8, 45px); gap: 6px;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 4px;
+            width: 100%;
+            max-width: 320px;
         }
 
         .m-tile {
-            width: 45px; height: 45px; background: #1a1a1a;
-            border: 1px solid #333; border-radius: 8px;
+            aspect-ratio: 1/1;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s; font-weight: 900;
+            font-size: 12px;
+            font-weight: bold;
         }
-        .m-tile:hover { background: #252525; border-color: var(--neon-blue); }
 
-        /* --- SYSTEM BUTTONS --- */
-        .btn-sys {
-            width: 100%; padding: 18px; background: transparent;
-            border: 2px solid var(--neon-blue); color: var(--neon-blue);
-            font-family: var(--font-main); font-weight: 800;
-            text-transform: uppercase; border-radius: 50px;
-            cursor: pointer; transition: 0.4s; margin-top: 25px;
+        .btn-action {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            font-weight: 800;
+            border-radius: 10px;
         }
-        .btn-sys:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 30px var(--neon-blue); }
 
-        /* --- TERMINAL OUTPUT --- */
+        /* --- CONSOLE OUTPUT --- */
         .console {
-            grid-column: 1 / -1;
+            width: 90%;
+            max-width: 1160px;
             background: #000;
-            border: 2px solid #111;
-            border-radius: 15px;
-            padding: 25px;
-            height: 180px;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            height: 100px;
             overflow-y: auto;
             color: var(--neon-green);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 800px) {
-            .name-box h1 { font-size: 2.8rem; letter-spacing: -2px; }
-            .name-box { padding: 30px 40px; }
-            .dashboard { grid-template-columns: 1fr; }
+            font-size: 0.8rem;
+            border: 1px solid #111;
         }
     </style>
 </head>
 <body>
 
-    <header class="color-box-header">
-        <div class="name-box">
+    <header class="header-container">
+        <div class="animated-name-box">
             <h1>KAVISH SHAH</h1>
-            <span class="tagline">ENGINEER 6.0</span>
+            <p style="color: #888; letter-spacing: 5px; font-size: 0.7rem;">SYSTEM ARCHITECT</p>
         </div>
     </header>
 
     <main class="dashboard">
 
-        <div class="engine-card">
-            <h2 class="card-title">SNAKE VORTEX [APPLE_MODE]</h2>
-            <div class="stat-bar">
-                <span>DATAPOINTS:</span>
-                <span id="score" class="score-val">0000</span>
+        <div class="card">
+            <h2 class="card-title">SNAKE VORTEX 6.0</h2>
+            <div class="score-row">
+                <span>DATA: <span id="scoreVal">0</span></span>
+                <span style="color:var(--neon-pink)">FPS: 60</span>
             </div>
-            <div class="viewport">
-                <canvas id="snakeCanvas" width="360" height="360"></canvas>
+            <div class="game-area" id="gameArea">
+                <canvas id="snakeCanvas" width="400" height="400"></canvas>
             </div>
-            <div class="d-pad">
-                <div></div><button class="btn-ctrl" onclick="snake.setDir('UP')">▲</button><div></div>
-                <button class="btn-ctrl" onclick="snake.setDir('LEFT')">◀</button>
-                <button class="btn-ctrl" onclick="snake.setDir('DOWN')">▼</button>
-                <button class="btn-ctrl" onclick="snake.setDir('RIGHT')">▶</button>
+            <div class="mobile-controls">
+                <div></div><button class="ctrl-btn" onpointerdown="snake.setDir('UP')">▲</button><div></div>
+                <button class="ctrl-btn" onpointerdown="snake.setDir('LEFT')">◀</button>
+                <button class="ctrl-btn" onpointerdown="snake.setDir('DOWN')">▼</button>
+                <button class="ctrl-btn" onpointerdown="snake.setDir('RIGHT')">▶</button>
             </div>
-            <button class="btn-sys" onclick="snake.init()">INITIALIZE SYSTEM</button>
-            <button class="btn-sys" style="border-color:var(--neon-red); color:var(--neon-red)" onclick="snake.kill()">ABORT SEQUENCE</button>
+            <button class="btn-action" onclick="snake.init()">INITIALIZE</button>
         </div>
 
-        <div class="engine-card">
-            <h2 class="card-title">MINESWEEPER CORE</h2>
+        <div class="card">
+            <h2 class="card-title">MINESWEEPER MATRIX</h2>
             <div class="m-grid" id="mineGrid"></div>
-            <button class="btn-sys" onclick="mines.boot()">RELOAD MATRIX</button>
-            <div style="margin-top: 30px; color: #555; font-size: 0.8rem; text-align: center;">
-                LOGIC: Identify data-mines. Avoid system corruption.
-            </div>
-        </div>
-
-        <div class="console" id="log">
-            [SYS] Kavish Shah Core Version 6.0.4 Loaded.<br>
-            [SYS] Snake Vortex Engine: Online.<br>
-            [SYS] Matrix Grid: Standby.<br>
+            <button class="btn-action" onclick="mines.boot()">REBOOT MATRIX</button>
         </div>
 
     </main>
 
+    <div class="console" id="log">[SYS] Ready. Input lag optimized for mobile...</div>
+
     <script>
-        // --- LOGGING UTILITY ---
-        const logger = (msg) => {
+        const log = (m) => {
             const l = document.getElementById('log');
-            l.innerHTML += `> ${msg}<br>`;
+            l.innerHTML += `<br>> ${m}`;
             l.scrollTop = l.scrollHeight;
-        }
+        };
 
         /**
-         * SNAKE VORTEX ENGINE
-         * Optimized for zero-latency, apple-spawning, and border-wrap logic.
+         * ZERO-DELAY SNAKE ENGINE
+         * Uses RequestAnimationFrame for smooth 60fps movement
          */
         const snake = {
+            canvas: document.getElementById('snakeCanvas'),
             ctx: document.getElementById('snakeCanvas').getContext('2d'),
             body: [],
             apple: {x: 0, y: 0},
@@ -275,31 +262,26 @@
             nextDir: 'RIGHT',
             score: 0,
             active: false,
-            timer: null,
+            lastTime: 0,
+            speed: 120, // ms per move
 
             init() {
-                logger("Booting Snake Vortex...");
-                this.kill();
-                this.body = [
-                    {x: 180, y: 180},
-                    {x: 160, y: 180},
-                    {x: 140, y: 180},
-                    {x: 120, y: 180}
-                ];
+                this.body = [{x:200, y:200}, {x:180, y:200}, {x:160, y:200}];
                 this.dir = 'RIGHT';
                 this.nextDir = 'RIGHT';
                 this.score = 0;
                 this.active = true;
                 this.spawnApple();
-                this.updateUI();
-                this.timer = setInterval(() => this.engineLoop(), 90);
-                logger("Vortex Engine: Stable at 90ms. Apple Sync: Validated.");
+                document.getElementById('scoreVal').innerText = "0";
+                log("Engine Online. Swiping/Buttons enabled.");
+                requestAnimationFrame((t) => this.loop(t));
             },
 
-            kill() {
-                clearInterval(this.timer);
-                this.active = false;
-                this.ctx.clearRect(0,0,360,360);
+            spawnApple() {
+                this.apple = {
+                    x: Math.floor(Math.random() * 20) * 20,
+                    y: Math.floor(Math.random() * 20) * 20
+                };
             },
 
             setDir(d) {
@@ -309,19 +291,19 @@
                 if(d === 'RIGHT' && this.dir !== 'LEFT') this.nextDir = 'RIGHT';
             },
 
-            spawnApple() {
-                this.apple = {
-                    x: Math.floor(Math.random() * 18) * 20,
-                    y: Math.floor(Math.random() * 18) * 20
-                };
-            },
-
-            updateUI() {
-                document.getElementById('score').innerText = this.score.toString().padStart(4, '0');
-            },
-
-            engineLoop() {
+            loop(timeStamp) {
                 if(!this.active) return;
+
+                const delta = timeStamp - this.lastTime;
+                if(delta > this.speed) {
+                    this.lastTime = timeStamp;
+                    this.tick();
+                }
+                this.render();
+                requestAnimationFrame((t) => this.loop(t));
+            },
+
+            tick() {
                 this.dir = this.nextDir;
                 const head = {...this.body[0]};
 
@@ -330,93 +312,103 @@
                 if(this.dir === 'LEFT') head.x -= 20;
                 if(this.dir === 'RIGHT') head.x += 20;
 
-                // --- BORDER WRAP VORTEX ---
-                if(head.x < 0) head.x = 340;
-                if(head.x >= 360) head.x = 0;
-                if(head.y < 0) head.y = 340;
-                if(head.y >= 360) head.y = 0;
+                // --- VORTEX BORDER WRAP ---
+                if(head.x < 0) head.x = 380;
+                if(head.x >= 400) head.x = 0;
+                if(head.y < 0) head.y = 380;
+                if(head.y >= 400) head.y = 0;
 
-                // Self-Collision Detection
-                if(this.body.some(seg => seg.x === head.x && seg.y === head.y)) {
-                    logger("COLLISION DETECTED. Resetting engine state...");
-                    return this.init();
+                // Collision
+                if(this.body.some(s => s.x === head.x && s.y === head.y)) {
+                    this.active = false;
+                    log("Crash detected. Score: " + this.score);
+                    return;
                 }
 
                 this.body.unshift(head);
 
-                // --- APPLE CONSUMPTION LOGIC ---
+                // Eat Apple
                 if(head.x === this.apple.x && head.y === this.apple.y) {
-                    this.score += 100;
-                    this.updateUI();
+                    this.score += 10;
+                    document.getElementById('scoreVal').innerText = this.score;
                     this.spawnApple();
-                    logger(`Apple consumed. Data stream: +100.`);
+                    // Speed up slightly
+                    if(this.speed > 60) this.speed -= 1;
                 } else {
                     this.body.pop();
                 }
-
-                this.draw();
             },
 
-            draw() {
+            render() {
                 const c = this.ctx;
                 c.fillStyle = '#000';
-                c.fillRect(0,0,360,360);
+                c.fillRect(0,0,400,400);
 
-                // Draw Apple (The classic red apple)
+                // Apple
                 c.fillStyle = '#ff3131';
-                c.shadowBlur = 15; c.shadowColor = '#ff3131';
+                c.shadowBlur = 10; c.shadowColor = '#ff3131';
                 c.beginPath();
-                c.arc(this.apple.x + 10, this.apple.y + 10, 9, 0, Math.PI * 2);
+                c.arc(this.apple.x+10, this.apple.y+10, 8, 0, Math.PI*2);
                 c.fill();
 
-                // Draw Snake segments
-                this.body.forEach((seg, i) => {
-                    c.fillStyle = (i === 0) ? '#00f2ff' : '#00707a';
-                    c.shadowBlur = (i === 0) ? 20 : 0;
-                    c.shadowColor = '#00f2ff';
-                    c.fillRect(seg.x + 1, seg.y + 1, 18, 18);
-                    c.shadowBlur = 0;
+                // Snake
+                c.shadowBlur = 0;
+                this.body.forEach((s, i) => {
+                    c.fillStyle = (i === 0) ? '#00f2ff' : '#007788';
+                    c.fillRect(s.x+1, s.y+1, 18, 18);
                 });
             }
         };
 
+        // --- SWIPE GESTURES FOR MOBILE ---
+        let touchStartX = 0; let touchStartY = 0;
+        document.getElementById('gameArea').addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, false);
+
+        document.getElementById('gameArea').addEventListener('touchend', e => {
+            let x = e.changedTouches[0].screenX;
+            let y = e.changedTouches[0].screenY;
+            let dx = x - touchStartX;
+            let dy = y - touchStartY;
+
+            if (Math.abs(dx) > Math.abs(dy)) {
+                snake.setDir(dx > 0 ? 'RIGHT' : 'LEFT');
+            } else {
+                snake.setDir(dy > 0 ? 'DOWN' : 'UP');
+            }
+        }, false);
+
         /**
-         * MINESWEEPER ENGINE
+         * MINESWEEPER LOGIC
          */
         const mines = {
-            grid: document.getElementById('mineGrid'),
             boot() {
-                logger("Re-initializing Matrix Grid...");
-                this.grid.innerHTML = '';
+                const g = document.getElementById('mineGrid');
+                g.innerHTML = '';
                 for(let i=0; i<64; i++) {
-                    const tile = document.createElement('div');
-                    tile.className = 'm-tile';
-                    tile.onclick = () => {
+                    const t = document.createElement('div');
+                    t.className = 'm-tile';
+                    t.onclick = () => {
                         if(Math.random() < 0.15) {
-                            tile.innerText = '💣';
-                            tile.style.color = '#ff3131';
-                            tile.style.backgroundColor = '#300';
-                            logger("DATA BREACH: Mine detonated.");
+                            t.innerText = '💣'; t.style.background = '#400';
                         } else {
-                            tile.innerText = Math.floor(Math.random() * 4);
-                            tile.style.color = '#39ff14';
-                            tile.style.backgroundColor = '#111';
+                            t.innerText = Math.floor(Math.random() * 3);
+                            t.style.background = '#222';
                         }
                     };
-                    this.grid.appendChild(tile);
+                    g.appendChild(t);
                 }
             }
         };
 
-        // Keyboard Event Handling
+        // Desktop controls
         window.addEventListener('keydown', e => {
-            const keys = {ArrowUp:'UP', ArrowDown:'DOWN', ArrowLeft:'LEFT', ArrowRight:'RIGHT'};
-            if(keys[e.key]) snake.setDir(keys[e.key]);
+            if(e.key.includes('Arrow')) snake.setDir(e.key.replace('Arrow','').toUpperCase());
         });
 
-        // Initialize Matrix on Start
         mines.boot();
-        logger("Site Ready. Welcome, Kavish.");
     </script>
 </body>
 </html>
