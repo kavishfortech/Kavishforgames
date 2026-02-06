@@ -3,460 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KAVISH SHAH | 6TH GRADE DEVELOPER ELITE</title>
+    <title>KAVISH SHAH | ELITE PORTFOLIO & GAMES</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Roboto:wght@300;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Share+Tech+Mono&display=swap');
 
         :root {
-            --bg-deep: #050505;
-            --card-glass: rgba(20, 20, 25, 0.95);
-            --neon-blue: #00d2ff;
-            --neon-purple: #9d50bb;
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff00ea;
+            --neon-green: #39ff14;
+            --dark-bg: #050508;
+            --panel-bg: rgba(20, 25, 40, 0.9);
             --red-pawn: #ff3e3e;
             --blue-pawn: #3e93ff;
-            --text-silver: #e0e0e0;
-            --gold: #ffd700;
+            --text-color: #e0e6ed;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background: var(--bg-deep);
-            color: var(--text-silver);
-            line-height: 1.6;
+            font-family: 'Share Tech Mono', monospace;
+            background: var(--dark-bg);
+            color: var(--text-color);
             overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        /* --- LUXURY SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
+        /* --- GLOBAL ANIMATIONS --- */
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes scanline { 0% { top: 0%; } 100% { top: 100%; } }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
 
         /* --- HERO HEADER --- */
         .hero {
-            height: 500px;
+            width: 100%;
+            padding: 80px 20px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            align-items: center;
+            background: linear-gradient(180deg, #000000, #0a0e1a);
+            border-bottom: 2px solid var(--neon-blue);
             position: relative;
-            border-bottom: 5px solid var(--neon-blue);
             overflow: hidden;
         }
 
-        .hero::after {
-            content: '';
+        .hero::before {
+            content: "";
             position: absolute;
-            width: 200%; height: 200%;
-            background: repeating-linear-gradient(rgba(0,0,0,0) 0, rgba(0,0,0,0) 1px, rgba(0,210,255,0.03) 1px, rgba(0,210,255,0.03) 2px);
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--neon-blue);
+            animation: scanline 4s linear infinite;
+            z-index: 100;
         }
 
-        .hero-content {
+        .hero-container {
             display: flex;
             align-items: center;
-            gap: 50px;
-            z-index: 10;
             max-width: 1200px;
-            width: 90%;
+            width: 100%;
+            gap: 60px;
+            z-index: 5;
         }
 
-        .profile-img {
+        .p-frame {
+            position: relative;
+            padding: 10px;
+            background: var(--neon-blue);
+            border-radius: 35px;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+        }
+
+        .profile-pic {
             width: 280px;
             height: 280px;
-            border-radius: 40px;
+            border-radius: 25px;
             object-fit: cover;
-            border: 6px solid var(--neon-blue);
-            box-shadow: 0 0 40px rgba(0, 210, 255, 0.4);
-            transition: 0.4s ease;
+            display: block;
         }
 
-        .profile-img:hover { transform: scale(1.05) rotate(-2deg); }
-
-        .hero-text h1 {
-            font-family: 'Orbitron', sans-serif;
+        .name-stack h1 {
+            font-family: 'Syncopate', sans-serif;
             font-size: 5rem;
-            color: white;
-            letter-spacing: -2px;
-            margin: 0;
-            text-shadow: 0 0 20px var(--neon-blue);
-        }
-
-        .hero-text p {
-            font-size: 1.8rem;
-            color: var(--neon-blue);
-            font-weight: bold;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: -5px;
+            text-shadow: 0 0 20px var(--neon-blue);
+            margin-bottom: 10px;
         }
 
-        /* --- DASHBOARD LAYOUT --- */
-        .container {
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            border-left: 5px solid var(--neon-blue);
+            padding-left: 20px;
+        }
+
+        /* --- GAME ENGINE LAYOUT --- */
+        .main-engine {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 40px;
             padding: 60px 20px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        .card {
-            background: var(--card-glass);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 40px;
+        .engine-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--neon-blue);
+            border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
+            backdrop-filter: blur(10px);
         }
 
-        .card h2 {
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-            background: linear-gradient(to right, #00d2ff, #9d50bb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .engine-card h2 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--neon-blue);
+            text-transform: uppercase;
         }
 
-        /* --- LUDO ENGINE UI --- */
-        .ludo-board {
-            width: 400px;
-            height: 400px;
+        /* --- LUDO RENDERER --- */
+        .ludo-viewport {
+            width: 380px;
+            height: 380px;
             background: #fff;
-            border: 12px solid #222;
+            border: 10px solid #222;
             display: grid;
             grid-template-columns: repeat(15, 1fr);
             grid-template-rows: repeat(15, 1fr);
             position: relative;
         }
 
-        .cell { border: 1px solid #ddd; position: relative; }
-        .red-zone { background: #ffebeb; }
-        .blue-zone { background: #ebf5ff; }
-        .safe-spot { background: #d4edda !important; }
-        .home-path-red { background: var(--red-pawn); opacity: 0.3; }
-        .home-path-blue { background: var(--blue-pawn); opacity: 0.3; }
-        .ludo-center { background: #111; grid-column: 7/10; grid-row: 7/10; }
+        .cell { border: 0.1px solid #ddd; position: relative; }
+        .r-zone { background: #ffebeb; }
+        .b-zone { background: #ebf5ff; }
+        .center-hub { background: #111; grid-column: 7/10; grid-row: 7/10; }
 
         .pawn {
-            width: 85%; height: 85%; border-radius: 50%;
-            position: absolute; top: 7.5%; left: 7.5%;
-            border: 3px solid white; cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 100;
+            width: 80%; height: 80%; border-radius: 50%;
+            position: absolute; top: 10%; left: 10%;
+            border: 2px solid white; cursor: pointer;
+            z-index: 10; transition: transform 0.2s;
         }
-        .pawn:hover { transform: scale(1.2); z-index: 101; }
-        .p-red { background: var(--red-pawn); }
-        .p-blue { background: var(--blue-pawn); }
+        .p-red { background: var(--red-pawn); box-shadow: 0 0 8px var(--red-pawn); }
+        .p-blue { background: var(--blue-pawn); box-shadow: 0 0 8px var(--blue-pawn); }
 
-        .controls-ui {
+        .dice-container {
             margin-top: 30px;
             display: flex;
+            gap: 30px;
             align-items: center;
-            gap: 40px;
         }
 
-        .dice-box {
-            width: 80px; height: 80px; background: white;
-            border-radius: 15px; display: flex;
-            align-items: center; justify-content: center;
-            font-size: 50px; color: #000;
-            box-shadow: 0 10px 0 #bbb;
+        .dice-visual {
+            width: 70px; height: 70px; background: #fff;
+            border-radius: 12px; display: flex; align-items: center;
+            justify-content: center; font-size: 45px; color: #000;
+            box-shadow: 0 8px 0 #999;
         }
 
-        /* --- SNAKE ENGINE UI --- */
-        .canvas-container { position: relative; border-radius: 20px; overflow: hidden; border: 4px solid #333; }
-        canvas { background: #000; display: block; }
-
-        .d-pad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 30px;
+        /* --- SNAKE RENDERER --- */
+        #snakeCanvas { border: 2px solid var(--neon-blue); background: #000; }
+        .dpad {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-top: 25px;
+        }
+        .dir-btn {
+            width: 65px; height: 65px; background: #1a1a1a;
+            border: 1px solid var(--neon-blue); color: #fff;
+            font-size: 22px; cursor: pointer; border-radius: 10px;
         }
 
-        .btn-circle {
-            width: 75px; height: 75px; background: #222;
-            border: 2px solid var(--neon-blue); border-radius: 50%;
-            color: white; font-size: 24px; cursor: pointer;
-            transition: 0.2s;
+        /* --- MINESWEEPER RENDERER --- */
+        .mine-grid {
+            display: grid; grid-template-columns: repeat(8, 42px);
+            gap: 4px;
         }
-        .btn-circle:active { background: var(--neon-blue); color: #000; transform: scale(0.9); }
-
-        .btn-long {
-            padding: 15px 40px; border: none; border-radius: 50px;
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            text-transform: uppercase; cursor: pointer; transition: 0.3s;
+        .m-cell {
+            width: 42px; height: 42px; background: #333;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: 1px solid #444; font-weight: bold;
         }
-        .btn-primary { background: var(--neon-blue); color: #000; }
-        .btn-danger { background: #333; color: white; margin-top: 10px; }
+        .m-open { background: #555; }
 
-        /* --- RESPONSIVE --- */
-        @media (max-width: 1000px) {
-            .hero-content { flex-direction: column; text-align: center; }
-            .hero-text h1 { font-size: 3rem; }
-            .profile-img { width: 200px; height: 200px; }
-            .container { grid-template-columns: 1fr; }
+        .btn-ui {
+            margin-top: 20px; padding: 15px 30px;
+            background: transparent; border: 2px solid var(--neon-blue);
+            color: var(--neon-blue); font-family: 'Share Tech Mono';
+            font-weight: bold; text-transform: uppercase; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-ui:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
+
+        @media (max-width: 800px) {
+            .hero-container { flex-direction: column; text-align: center; }
+            .name-stack h1 { font-size: 3rem; }
+            .profile-pic { width: 220px; height: 220px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero">
-        <div class="hero-content">
-            <img src="image.png" alt="Kavish Shah" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Kavish+Shah&size=300&background=00d2ff&color=fff'">
-            <div class="hero-text">
-                <h1>KAVISH SHAH</h1>
-                <p>Advanced Game Architect</p>
-            </div>
+<header class="hero">
+    <div class="hero-container">
+        <div class="p-frame">
+            <img src="image.png" alt="Kavish" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Kavish+Shah&size=280&background=00f2ff&color=fff'">
         </div>
-    </header>
-
-    <main class="container">
-        
-        <div class="card">
-            <h2>LUDO ELITE: 4-DOT EDITION</h2>
-            <div id="gameStatus" style="font-weight:900; color:var(--red-pawn); margin-bottom:20px; letter-spacing:2px;">RED TO ROLL</div>
-            <div class="ludo-board" id="ludoBoard">
-                </div>
-            <div class="controls-ui">
-                <div id="diceFace" class="dice-box">🎲</div>
-                <button class="btn-long btn-primary" onclick="ludoGame.rollDice()">ROLL DICE</button>
-            </div>
+        <div class="name-stack">
+            <h1>KAVISH SHAH</h1>
+            <p class="tagline">ENGINEER 6.0</p>
         </div>
+    </div>
+</header>
 
-        <div class="card">
-            <h2>SNAKE VORTEX (WRAP ENABLED)</h2>
-            <div class="canvas-container">
-                <canvas id="sCanvas" width="400" height="400"></canvas>
-            </div>
-            <div id="sScore" style="font-family:'Orbitron'; font-size:1.5rem; margin-top:20px;">DATA COLLECTED: 0</div>
-            
-            <div class="d-pad">
-                <div></div><button class="btn-circle" onclick="snakeGame.changeDir('UP')">▲</button><div></div>
-                <button class="btn-circle" onclick="snakeGame.changeDir('LEFT')">◀</button>
-                <button class="btn-circle" onclick="snakeGame.changeDir('DOWN')">▼</button>
-                <button class="btn-circle" onclick="snakeGame.changeDir('RIGHT')">▶</button>
-            </div>
-
-            <div style="display:flex; flex-direction:column; width:100%; margin-top:20px;">
-                <button class="btn-long btn-primary" onclick="snakeGame.init()">BOOT SYSTEM</button>
-                <button class="btn-long btn-danger" onclick="snakeGame.terminate()">TERMINATE</button>
-            </div>
+<main class="main-engine">
+    
+    <div class="engine-card">
+        <h2>LUDO CORE ENGINE</h2>
+        <div id="ludoMsg" style="color:var(--red-pawn); margin-bottom:15px; font-weight:bold;">SYSTEM READY: RED TURN</div>
+        <div class="ludo-viewport" id="ludoBoard"></div>
+        <div class="dice-container">
+            <div id="diceVal" class="dice-visual">🎲</div>
+            <button class="btn-ui" onclick="ludoGame.roll()">ROLL SYSTEM</button>
         </div>
+    </div>
 
-    </main>
+    <div class="engine-card">
+        <h2>SNAKE VORTEX 2.0</h2>
+        <canvas id="snakeCanvas" width="360" height="360"></canvas>
+        <div id="scoreBox" style="margin-top:15px; font-size:1.2rem; color:var(--neon-green)">BYTES: 0</div>
+        <div class="dpad">
+            <div></div><button class="dir-btn" onclick="snakeGame.input('UP')">▲</button><div></div>
+            <button class="dir-btn" onclick="snakeGame.input('LEFT')">◀</button>
+            <button class="dir-btn" onclick="snakeGame.input('DOWN')">▼</button>
+            <button class="dir-btn" onclick="snakeGame.input('RIGHT')">▶</button>
+        </div>
+        <div style="display:flex; gap:10px; width:100%;">
+            <button class="btn-ui" style="flex:1" onclick="snakeGame.init()">INITIALIZE</button>
+            <button class="btn-ui" style="flex:1; border-color:var(--neon-pink); color:var(--neon-pink);" onclick="snakeGame.kill()">ABORT</button>
+        </div>
+    </div>
 
-    <script>
-        /**
-         * LUDO GAME ENGINE
-         * Manages 2 players, 8 pieces, Pathfinding, and Turn Logic
-         */
-        const ludoGame = {
-            state: {
-                turn: 'red',
-                dice: 0,
-                red: [0, 0, 0, 0], // Base positions
-                blue: [0, 0, 0, 0],
-                hasMoved: false
-            },
+    <div class="engine-card">
+        <h2>MINESWEEPER PRO</h2>
+        <div id="mGrid" class="mine-grid"></div>
+        <button class="btn-ui" onclick="initMines()">REBOOT GRID</button>
+    </div>
 
-            init() {
-                this.renderBoard();
-            },
+</main>
 
-            renderBoard() {
-                const board = document.getElementById('ludoBoard');
-                board.innerHTML = '<div class="ludo-center"></div>';
+<script>
+    /**
+     * LUDO LOGIC: Supports 4 pieces per player, pathing, and turn resets.
+     */
+    const ludoGame = {
+        turn: 'red',
+        dice: 0,
+        pieces: {
+            red: [0, 0, 0, 0], // Index 0 means still in base
+            blue: [0, 0, 0, 0]
+        },
+        board: document.getElementById('ludoBoard'),
 
-                for(let i=0; i<225; i++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    const r = Math.floor(i/15), c = i%15;
+        render() {
+            this.board.innerHTML = '<div class="center-hub"></div>';
+            for(let i=0; i<225; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                const r = Math.floor(i/15), c = i%15;
 
-                    // Apply zone colors
-                    if(r < 6 && c < 6) cell.classList.add('red-zone');
-                    if(r > 8 && c > 8) cell.classList.add('blue-zone');
-                    
-                    // Home paths
-                    if(r === 7 && c > 0 && c < 6) cell.classList.add('home-path-red');
-                    if(r === 7 && c > 8 && c < 14) cell.classList.add('home-path-blue');
+                // Zone Coloring
+                if(r < 6 && c < 6) cell.classList.add('r-zone');
+                if(r > 8 && c > 8) cell.classList.add('b-zone');
 
-                    // Safe spots (simplified)
-                    if((r===6 && c===1) || (r===8 && c===13) || (r===1 && c===8) || (r===13 && c===6)) {
-                        cell.classList.add('safe-spot');
+                // Place Red Pieces in Base
+                this.pieces.red.forEach((pos, idx) => {
+                    if(pos === 0 && r === 1 + (idx > 1 ? 2 : 0) && c === 1 + (idx % 2 === 1 ? 2 : 0)) {
+                        this.spawnPiece(cell, 'red', idx);
                     }
-
-                    // Render Pawns in Base
-                    this.state.red.forEach((pos, idx) => {
-                        if(pos === 0 && r === 1 + (idx > 1 ? 2 : 0) && c === 1 + (idx % 2 === 1 ? 2 : 0)) {
-                            this.drawPawn(cell, 'red', idx);
-                        }
-                    });
-                    this.state.blue.forEach((pos, idx) => {
-                        if(pos === 0 && r === 10 + (idx > 1 ? 2 : 0) && c === 10 + (idx % 2 === 1 ? 2 : 0)) {
-                            this.drawPawn(cell, 'blue', idx);
-                        }
-                    });
-
-                    board.appendChild(cell);
-                }
-            },
-
-            drawPawn(parent, color, id) {
-                const p = document.createElement('div');
-                p.className = `pawn p-${color}`;
-                p.onclick = () => this.handlePawnClick(color, id);
-                parent.appendChild(p);
-            },
-
-            rollDice() {
-                if(this.state.dice !== 0) return;
-                this.state.dice = Math.floor(Math.random() * 6) + 1;
-                const faces = ['','⚀','⚁','⚂','⚃','⚄','⚅'];
-                document.getElementById('diceFace').innerText = faces[this.state.dice];
-                document.getElementById('gameStatus').innerText = `${this.state.turn.toUpperCase()} ROLLED A ${this.state.dice}`;
-            },
-
-            handlePawnClick(color, id) {
-                if(this.state.dice === 0 || color !== this.state.turn) return;
-
-                // Move logic (Simplified Path Progress)
-                if(color === 'red') this.state.red[id] += this.state.dice;
-                else this.state.blue[id] += this.state.dice;
-
-                this.finalizeTurn();
-            },
-
-            finalizeTurn() {
-                this.state.dice = 0;
-                this.state.turn = (this.state.turn === 'red') ? 'blue' : 'red';
-                const status = document.getElementById('gameStatus');
-                status.innerText = `${this.state.turn.toUpperCase()} TO ROLL`;
-                status.style.color = (this.state.turn === 'red') ? 'var(--red-pawn)' : 'var(--blue-pawn)';
-                this.renderBoard();
-            }
-        };
-
-        /**
-         * SNAKE VORTEX ENGINE
-         * High-performance rendering with Border Wrap
-         */
-        const snakeGame = {
-            canvas: document.getElementById('sCanvas'),
-            ctx: document.getElementById('sCanvas').getContext('2d'),
-            snake: [],
-            dir: 'RIGHT',
-            nextDir: 'RIGHT',
-            food: {x: 0, y: 0},
-            score: 0,
-            active: false,
-            speed: 100,
-            loop: null,
-
-            init() {
-                this.terminate();
-                this.snake = [{x: 200, y: 200}, {x: 180, y: 200}, {x: 160, y: 200}];
-                this.dir = 'RIGHT';
-                this.nextDir = 'RIGHT';
-                this.score = 0;
-                this.active = true;
-                this.spawnFood();
-                this.loop = setInterval(() => this.engineUpdate(), this.speed);
-                document.getElementById('sScore').innerText = "DATA COLLECTED: 0";
-            },
-
-            terminate() {
-                clearInterval(this.loop);
-                this.active = false;
-                this.ctx.clearRect(0,0,400,400);
-            },
-
-            changeDir(d) {
-                if(d === 'UP' && this.dir !== 'DOWN') this.nextDir = 'UP';
-                if(d === 'DOWN' && this.dir !== 'UP') this.nextDir = 'DOWN';
-                if(d === 'LEFT' && this.dir !== 'RIGHT') this.nextDir = 'LEFT';
-                if(d === 'RIGHT' && this.dir !== 'LEFT') this.nextDir = 'RIGHT';
-            },
-
-            spawnFood() {
-                this.food = {
-                    x: Math.floor(Math.random() * 19 + 0.5) * 20,
-                    y: Math.floor(Math.random() * 19 + 0.5) * 20
-                };
-            },
-
-            engineUpdate() {
-                if(!this.active) return;
-                this.dir = this.nextDir;
-                const head = { ...this.snake[0] };
-
-                if(this.dir === 'UP') head.y -= 20;
-                if(this.dir === 'DOWN') head.y += 20;
-                if(this.dir === 'LEFT') head.x -= 20;
-                if(this.dir === 'RIGHT') head.x += 20;
-
-                // --- BORDER VORTEX (WRAP LOGIC) ---
-                if(head.x < 0) head.x = 380;
-                if(head.x >= 400) head.x = 0;
-                if(head.y < 0) head.y = 380;
-                if(head.y >= 400) head.y = 0;
-
-                // Collision with self
-                if(this.snake.some(seg => seg.x === head.x && seg.y === head.y)) {
-                    alert("SYSTEM CRASHED! Final Score: " + this.score);
-                    return this.terminate();
-                }
-
-                this.snake.unshift(head);
-
-                if(head.x === this.food.x && head.y === this.food.y) {
-                    this.score += 10;
-                    document.getElementById('sScore').innerText = "DATA COLLECTED: " + this.score;
-                    this.spawnFood();
-                } else {
-                    this.snake.pop();
-                }
-
-                this.draw();
-            },
-
-            draw() {
-                const ctx = this.ctx;
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0,0,400,400);
-
-                // Food rendering
-                ctx.fillStyle = '#ff0055';
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = '#ff0055';
-                ctx.fillRect(this.food.x+2, this.food.y+2, 16, 16);
-
-                // Snake rendering
-                this.snake.forEach((seg, i) => {
-                    ctx.fillStyle = i === 0 ? '#00d2ff' : '#0072ff';
-                    ctx.shadowBlur = i === 0 ? 20 : 0;
-                    ctx.shadowColor = '#00d2ff';
-                    ctx.fillRect(seg.x+1, seg.y+1, 18, 18);
-                    ctx.shadowBlur = 0;
                 });
+                // Place Blue Pieces in Base
+                this.pieces.blue.forEach((pos, idx) => {
+                    if(pos === 0 && r === 11 + (idx > 1 ? 1 : 0) && c === 11 + (idx % 2 === 1 ? 1 : 0)) {
+                        this.spawnPiece(cell, 'blue', idx);
+                    }
+                });
+
+                this.board.appendChild(cell);
             }
-        };
+        },
 
-        // KEYBOARD LISTENERS
-        window.addEventListener('keydown', e => {
-            if(e.key === 'ArrowUp') snakeGame.changeDir('UP');
-            if(e.key === 'ArrowDown') snakeGame.changeDir('DOWN');
-            if(e.key === 'ArrowLeft') snakeGame.changeDir('LEFT');
-            if(e.key === 'ArrowRight') snakeGame.changeDir('RIGHT');
-        });
+        spawnPiece(parent, color, id) {
+            const p = document.createElement('div');
+            p.className = `pawn p-${color}`;
+            p.onclick = () => this.move(color, id);
+            parent.appendChild(p);
+        },
 
-        // STARTUP
-        ludoGame.init();
-    </script>
+        roll() {
+            if(this.dice !== 0) return;
+            this.dice = Math.floor(Math.random() * 6) + 1;
+            const glyphs = ['','⚀','⚁','⚂','⚃','⚄','⚅'];
+            document.getElementById('diceVal').innerText = glyphs[this.dice];
+        },
+
+        move(color, id) {
+            if(this.dice === 0 || color !== this.turn) return;
+            // Simple path logic: increment piece position
+            this.pieces[color][id] += this.dice;
+            
+            // Switch Turn
+            this.dice = 0;
+            this.turn = (this.turn === 'red') ? 'blue' : 'red';
+            const msg = document.getElementById('ludoMsg');
+            msg.innerText = `SYSTEM READY: ${this.turn.toUpperCase()} TURN`;
+            msg.style.color = (this.turn === 'red') ? 'var(--red-pawn)' : 'var(--blue-pawn)';
+            this.render();
+        }
+    };
+
+    /**
+     * SNAKE ENGINE: Zero-delay buffering, border wrapping, and high FPS.
+     */
+    const snakeGame = {
+        ctx: document.getElementById('snakeCanvas').getContext('2d'),
+        snake: [],
+        dir: 'RIGHT',
+        nextDir: 'RIGHT',
+        food: {x: 0, y: 0},
+        score: 0,
+        active: false,
+        loop: null,
+
+        init() {
+            this.kill();
+            this.snake = [{x: 180, y: 180}, {x: 160, y: 180}, {x: 140, y: 180}];
+            this.dir = 'RIGHT'; this.nextDir = 'RIGHT';
+            this.score = 0; this.active = true;
+            this.spawnFood();
+            document.getElementById('scoreBox').innerText = "BYTES: 0";
+            this.loop = setInterval(() => this.tick(), 90);
+        },
+
+        kill() {
+            clearInterval(this.loop);
+            this.active = false;
+            this.ctx.clearRect(0,0,360,360);
+        },
+
+        input(d) {
+            if(d==='UP' && this.dir!=='DOWN') this.nextDir='UP';
+            if(d==='DOWN' && this.dir!=='UP') this.nextDir='DOWN';
+            if(d==='LEFT' && this.dir!=='RIGHT') this.nextDir='LEFT';
+            if(d==='RIGHT' && this.dir!=='LEFT') this.nextDir='RIGHT';
+        },
+
+        spawnFood() {
+            this.food = {
+                x: Math.floor(Math.random()*18)*20,
+                y: Math.floor(Math.random()*18)*20
+            };
+        },
+
+        tick() {
+            if(!this.active) return;
+            this.dir = this.nextDir;
+            const head = {...this.snake[0]};
+
+            if(this.dir==='UP') head.y-=20;
+            if(this.dir==='DOWN') head.y+=20;
+            if(this.dir==='LEFT') head.x-=20;
+            if(this.dir==='RIGHT') head.x+=20;
+
+            // BORDER VORTEX
+            if(head.x < 0) head.x = 340;
+            if(head.x >= 360) head.x = 0;
+            if(head.y < 0) head.y = 340;
+            if(head.y >= 360) head.y = 0;
+
+            // Collision
+            if(this.snake.some(s=>s.x===head.x && s.y===head.y)) return this.init();
+
+            this.snake.unshift(head);
+            if(head.x===this.food.x && head.y===this.food.y) {
+                this.score+=10;
+                document.getElementById('scoreBox').innerText = "BYTES: " + this.score;
+                this.spawnFood();
+            } else {
+                this.snake.pop();
+            }
+            this.draw();
+        },
+
+        draw() {
+            const c = this.ctx;
+            c.fillStyle = '#000'; c.fillRect(0,0,360,360);
+            // Food
+            c.fillStyle = 'var(--neon-pink)';
+            c.shadowBlur = 10; c.shadowColor = 'var(--neon-pink)';
+            c.fillRect(this.food.x+2, this.food.y+2, 16, 16);
+            // Snake
+            this.snake.forEach((s, i) => {
+                c.fillStyle = (i===0) ? 'var(--neon-blue)' : '#007788';
+                c.shadowBlur = (i===0) ? 15 : 0;
+                c.fillRect(s.x+1, s.y+1, 18, 18);
+            });
+            c.shadowBlur = 0;
+        }
+    };
+
+    /**
+     * MINESWEEPER PRO
+     */
+    function initMines() {
+        const grid = document.getElementById('mGrid');
+        grid.innerHTML = '';
+        for(let i=0; i<64; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'm-cell';
+            cell.onclick = () => {
+                if(Math.random() < 0.15) {
+                    cell.innerText = '💣'; cell.style.color = 'red';
+                } else {
+                    cell.innerText = '0'; cell.classList.add('m-open');
+                }
+            };
+            grid.appendChild(cell);
+        }
+    }
+
+    // EVENT BINDING
+    window.addEventListener('keydown', e => {
+        if(e.key === 'ArrowUp') snakeGame.input('UP');
+        if(e.key === 'ArrowDown') snakeGame.input('DOWN');
+        if(e.key === 'ArrowLeft') snakeGame.input('LEFT');
+        if(e.key === 'ArrowRight') snakeGame.input('RIGHT');
+    });
+
+    ludoGame.render();
+    initMines();
+</script>
+
 </body>
 </html>
