@@ -121,17 +121,17 @@
             font-size: 1.1rem;
         }
 
-        /* --- OVERLAY SYSTEM (Universal) --- */
+        /* --- OVERLAY SYSTEM --- */
         .death-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 100;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(5px);
         }
 
         .death-overlay h3 { color: var(--neon-red); font-size: 2rem; margin-bottom: 20px; font-family: 'Syncopate'; }
@@ -213,7 +213,7 @@
         <div class="engine-card">
             <span class="card-label">MINESWEEPER MATRIX</span>
             <div class="score-panel">
-                <span style="color:var(--neon-green)">DATA: <span id="mineScore">0</span></span>
+                <span style="color:var(--neon-green)">SCORE: <span id="mineScore">0</span></span>
                 <span style="color:var(--neon-pink)">FPS: <span id="mineFPS">60</span></span>
             </div>
             <div class="game-viewport">
@@ -230,7 +230,7 @@
         </div>
     </main>
 
-    <div class="sys-log" id="termLog">[SYS] Kernal V6.9 online. Neural games active.</div>
+    <div class="sys-log" id="termLog">[SYS] Neural Interface Loaded... Welcome Architect.</div>
 
     <script>
         const term = (msg) => {
@@ -239,12 +239,15 @@
             l.scrollTop = l.scrollHeight;
         };
 
-        /* --- PERFORMANCE TRACKER --- */
+        /* --- FPS UTILITY --- */
         let lastFrame = 0;
         function updateFPS(now, elementId) {
             const dt = now - lastFrame;
             lastFrame = now;
-            if (now % 20 < 1) document.getElementById(elementId).innerText = Math.round(1000 / dt);
+            if (now % 20 < 1) {
+                const fps = Math.round(1000 / dt);
+                document.getElementById(elementId).innerText = fps > 60 ? 60 : fps;
+            }
         }
 
         /* --- SNAKE ENGINE --- */
@@ -280,7 +283,13 @@
                 const head = {...this.body[0]};
                 if(this.dir==='UP') head.y-=20; if(this.dir==='DOWN') head.y+=20; if(this.dir==='LEFT') head.x-=20; if(this.dir==='RIGHT') head.x+=20;
                 if(head.x<0) head.x=380; if(head.x>=400) head.x=0; if(head.y<0) head.y=380; if(head.y>=400) head.y=0;
-                if(this.body.some(s=>s.x===head.x&&s.y===head.y)) { this.active=false; document.getElementById('snakeOverlay').style.display='flex'; return; }
+                if(this.body.some(s=>s.x===head.x&&s.y===head.y)) { 
+                    this.score = 0; // Reset score on death
+                    document.getElementById('snakeScore').innerText = "0";
+                    this.active=false; 
+                    document.getElementById('snakeOverlay').style.display='flex'; 
+                    return; 
+                }
                 this.body.unshift(head);
                 if(head.x===this.apple.x && head.y===this.apple.y) { this.score+=10; document.getElementById('snakeScore').innerText=this.score; this.spawnApple(); }
                 else this.body.pop();
@@ -292,12 +301,13 @@
             }
         };
 
-        /* --- MINESWEEPER ENGINE (FIXED) --- */
+        /* --- MINESWEEPER ENGINE --- */
         const mines = {
             score: 0,
             active: true,
             reset() {
-                this.score = 0; this.active = true;
+                this.score = 0; 
+                this.active = true;
                 document.getElementById('mineOverlay').style.display = 'none';
                 document.getElementById('mineScore').innerText = "0";
                 const g = document.getElementById('mGrid'); g.innerHTML = '';
@@ -312,19 +322,34 @@
             },
             click(t) {
                 if(!this.active || t.style.background === 'rgb(34, 34, 34)') return;
+                
+                // Bomb logic
                 if(Math.random() < 0.15) {
-                    t.innerText = '💣'; t.style.background = '#ff3131';
+                    t.innerText = '💣'; 
+                    t.style.background = '#ff3131';
+                    
+                    // --- THE FIX: WIPE SCORE ON LOSS ---
+                    this.score = 0; 
+                    document.getElementById('mineScore').innerText = "0";
+                    
                     this.active = false;
                     document.getElementById('mineOverlay').style.display = 'flex';
-                    term("CRITICAL FAILURE: Mine Triggered.");
+                    term("SYSTEM BREACHED: Score reset to 0.");
                 } else {
                     t.innerText = Math.floor(Math.random()*4);
-                    t.style.background = '#222'; t.style.color = '#39ff14';
+                    t.style.background = '#222'; 
+                    t.style.color = '#39ff14';
                     this.score += 5;
                     document.getElementById('mineScore').innerText = this.score;
                 }
             },
-            quit() { this.active = false; document.getElementById('mineOverlay').style.display='none'; document.getElementById('mGrid').innerHTML=''; },
+            quit() { 
+                this.active = false; 
+                this.score = 0;
+                document.getElementById('mineScore').innerText = "0";
+                document.getElementById('mineOverlay').style.display='none'; 
+                document.getElementById('mGrid').innerHTML=''; 
+            },
             mon(t) { if(this.active) { updateFPS(t, 'mineFPS'); requestAnimationFrame((t)=>this.mon(t)); } }
         };
 
