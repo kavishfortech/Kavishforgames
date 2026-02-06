@@ -1,4 +1,4 @@
-# Kavish Shah | 6th Grade Web Developer Portfolio
+# Kavish Shah | 6th Grade Web Developer resume
 
 Welcome to my personal website! This project is a custom-built web portal featuring a professional profile and three interactive games built using HTML, CSS, and JavaScript.
 
@@ -13,9 +13,9 @@ You can view my website live here:
 
 ## 🎮 Included Games
 I have integrated three classic games directly into the site:
-1.  **Ludo (2-Player):** A functional turn-based game for two players (Red vs. Blue) with a digital dice roller.
-2.  **Snake:** The classic arcade game. Eat the red fruit to grow longer!
-3.  **Minesweeper:** A logic-based puzzle. Click the tiles to find safe zones and avoid the hidden bombs.
+
+1.  **Snake:** The classic arcade game. Eat the red fruit to grow longer!
+2.  **Minesweeper:** A logic-based puzzle. Click the tiles to find safe zones and avoid the hidden bombs.
 
 ## 🛠️ How to Set This Up Locally
 1.  **Download the files:** Save the `index.html` file to your computer.
