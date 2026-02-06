@@ -16,11 +16,7 @@
             --panel-bg: rgba(12, 12, 20, 0.98);
         }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; padding: 0; 
-            touch-action: manipulation;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
 
         body {
             font-family: 'JetBrains Mono', monospace;
@@ -92,7 +88,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            position: relative;
         }
 
         .card-label {
@@ -115,10 +111,7 @@
             overflow: hidden;
         }
 
-        canvas {
-            width: 100%; height: 100%;
-            display: block;
-        }
+        canvas { width: 100%; height: 100%; display: block; }
 
         .score-panel {
             width: 100%;
@@ -126,94 +119,51 @@
             justify-content: space-between;
             padding: 10px 5px;
             font-size: 1.1rem;
-            color: var(--neon-green);
         }
 
-        /* --- DIRECTIONAL CONTROLS --- */
+        /* --- GAME OVER OVERLAY --- */
+        #deathOverlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        #deathOverlay h3 { color: var(--neon-red); font-size: 2rem; margin-bottom: 20px; font-family: 'Syncopate'; }
+
+        /* --- CONTROLS --- */
         .joypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin: 20px 0;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin: 20px 0;
         }
 
         .btn-dir {
-            width: 65px; height: 65px;
-            background: #111;
-            border: 2px solid var(--neon-blue);
-            color: #fff;
-            border-radius: 15px;
-            font-size: 22px;
+            width: 65px; height: 65px; background: #111;
+            border: 2px solid var(--neon-blue); color: #fff;
+            border-radius: 15px; font-size: 22px;
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* --- ACTION BUTTONS --- */
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            margin-top: 10px;
-        }
+        .btn-row { display: flex; gap: 10px; width: 100%; margin-top: 10px; }
 
         .btn-ui {
-            flex: 1;
-            padding: 16px;
-            background: transparent;
-            border: 2px solid var(--neon-blue);
-            color: var(--neon-blue);
-            font-weight: 800;
-            text-transform: uppercase;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
+            flex: 1; padding: 16px; background: transparent;
+            border: 2px solid var(--neon-blue); color: var(--neon-blue);
+            font-weight: 800; text-transform: uppercase; border-radius: 8px; cursor: pointer;
         }
 
         .btn-ui:active { background: var(--neon-blue); color: #000; }
-
-        .btn-abort {
-            border-color: var(--neon-red);
-            color: var(--neon-red);
-        }
-
-        .btn-abort:active { background: var(--neon-red); color: #fff; }
+        .btn-abort { border-color: var(--neon-red); color: var(--neon-red); }
 
         /* --- MINESWEEPER --- */
-        .mine-field {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 5px;
-            width: 100%;
-            max-width: 320px;
-        }
+        .mine-field { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; width: 100%; max-width: 320px; }
+        .tile { aspect-ratio: 1/1; background: #111; border: 1px solid #222; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
 
-        .tile {
-            aspect-ratio: 1/1;
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 4px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.8rem;
-        }
-
-        /* --- TERMINAL --- */
-        .sys-log {
-            width: 90%;
-            max-width: 1150px;
-            background: #000;
-            padding: 15px;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            height: 80px;
-            overflow-y: auto;
-            color: var(--neon-green);
-            font-size: 0.75rem;
-            border: 1px solid #111;
-        }
-
-        @media (orientation: landscape) and (max-height: 500px) {
-            .grid-container { grid-template-columns: 1fr 1fr; }
-            .header-section { padding: 10px; }
-        }
+        .sys-log { width: 90%; max-width: 1150px; background: #000; padding: 15px; margin-bottom: 30px; border-radius: 10px; height: 80px; overflow-y: auto; color: var(--neon-green); font-size: 0.75rem; border: 1px solid #111; }
     </style>
 </head>
 <body>
@@ -226,15 +176,21 @@
     </header>
 
     <main class="grid-container">
-
         <div class="engine-card">
-            <span class="card-label">SNAKE VORTEX 6.1</span>
+            <span class="card-label">SNAKE VORTEX 6.5</span>
             <div class="score-panel">
-                <span>BUFFER: <span id="curScore">0</span></span>
-                <span id="fpsTag" style="color:var(--neon-pink)">SYNC: OK</span>
+                <span style="color:var(--neon-green)">SCORE: <span id="curScore">0</span></span>
+                <span style="color:var(--neon-pink)">FPS: <span id="fpsShower">60</span></span>
             </div>
             <div class="game-viewport" id="touchRegion">
                 <canvas id="snakeCanvas" width="400" height="400"></canvas>
+                <div id="deathOverlay">
+                    <h3>WASTED</h3>
+                    <div class="btn-row" style="padding: 0 20px;">
+                        <button class="btn-ui" onclick="snake.init()">RETRY</button>
+                        <button class="btn-ui btn-abort" onclick="snake.abort()">QUIT</button>
+                    </div>
+                </div>
             </div>
             <div class="joypad">
                 <div></div><button class="btn-dir" onpointerdown="snake.setDir('UP')">▲</button><div></div>
@@ -253,10 +209,9 @@
             <div class="mine-field" id="mGrid"></div>
             <button class="btn-ui" style="margin-top: 20px; width: 100%;" onclick="mines.reset()">REBOOT MATRIX</button>
         </div>
-
     </main>
 
-    <div class="sys-log" id="termLog">[SYS] Kernal Loaded. All systems nominal.</div>
+    <div class="sys-log" id="termLog">[SYS] Kernal Loaded. Performance Monitoring: Active.</div>
 
     <script>
         const term = (msg) => {
@@ -265,38 +220,31 @@
             l.scrollTop = l.scrollHeight;
         };
 
-        /**
-         * ZERO-DELAY SNAKE ENGINE
-         * Optimized for mobile touch-response and high FPS.
-         */
         const snake = {
             canvas: document.getElementById('snakeCanvas'),
             ctx: document.getElementById('snakeCanvas').getContext('2d'),
-            body: [],
-            apple: {x: 0, y: 0},
-            dir: 'RIGHT',
-            nextDir: 'RIGHT',
-            score: 0,
-            active: false,
-            lastTick: 0,
+            body: [], apple: {x: 0, y: 0},
+            dir: 'RIGHT', nextDir: 'RIGHT',
+            score: 0, active: false,
+            lastTick: 0, lastFrameTime: 0,
             frameReq: null,
 
             init() {
-                this.abort();
-                this.body = [{x:200, y:200}, {x:180, y:200}, {x:160, y:200}];
-                this.dir = 'RIGHT';
-                this.nextDir = 'RIGHT';
-                this.score = 0;
+                document.getElementById('deathOverlay').style.display = 'none';
                 this.active = true;
+                this.body = [{x:200, y:200}, {x:180, y:200}, {x:160, y:200}];
+                this.dir = 'RIGHT'; this.nextDir = 'RIGHT';
+                this.score = 0;
                 this.spawnApple();
                 document.getElementById('curScore').innerText = "0";
-                term("Engine Booted. Apple Synced.");
+                term("Engine Re-initialized.");
                 this.frameReq = requestAnimationFrame((t) => this.run(t));
             },
 
             abort() {
                 this.active = false;
                 cancelAnimationFrame(this.frameReq);
+                document.getElementById('deathOverlay').style.display = 'none';
                 this.ctx.fillStyle = "#000";
                 this.ctx.fillRect(0,0,400,400);
                 term("SEQUENCE ABORTED.");
@@ -318,8 +266,15 @@
 
             run(t) {
                 if(!this.active) return;
+                
+                // FPS Shower Logic
+                const dt = t - this.lastFrameTime;
+                this.lastFrameTime = t;
+                const fps = Math.round(1000 / dt);
+                if(t % 10 < 1) document.getElementById('fpsShower').innerText = fps;
+
                 const delta = t - this.lastTick;
-                if(delta > 110) { // Speed adjustment
+                if(delta > 105) { 
                     this.lastTick = t;
                     this.update();
                 }
@@ -330,50 +285,35 @@
             update() {
                 this.dir = this.nextDir;
                 const head = {...this.body[0]};
-
                 if(this.dir === 'UP') head.y -= 20;
                 if(this.dir === 'DOWN') head.y += 20;
                 if(this.dir === 'LEFT') head.x -= 20;
                 if(this.dir === 'RIGHT') head.x += 20;
 
-                // VORTEX WRAP
-                if(head.x < 0) head.x = 380;
-                if(head.x >= 400) head.x = 0;
-                if(head.y < 0) head.y = 380;
-                if(head.y >= 400) head.y = 0;
+                if(head.x < 0) head.x = 380; if(head.x >= 400) head.x = 0;
+                if(head.y < 0) head.y = 380; if(head.y >= 400) head.y = 0;
 
-                // Collision
                 if(this.body.some(s => s.x === head.x && s.y === head.y)) {
                     this.active = false;
-                    term("CRITICAL ERROR: Collision. Score: " + this.score);
+                    document.getElementById('deathOverlay').style.display = 'flex';
+                    term("COLLISION ERROR. Score: " + this.score);
                     return;
                 }
 
                 this.body.unshift(head);
-
                 if(head.x === this.apple.x && head.y === this.apple.y) {
                     this.score += 10;
                     document.getElementById('curScore').innerText = this.score;
                     this.spawnApple();
-                } else {
-                    this.body.pop();
-                }
+                } else { this.body.pop(); }
             },
 
             draw() {
                 const c = this.ctx;
-                c.fillStyle = '#000';
-                c.fillRect(0,0,400,400);
-
-                // Apple Logic
-                c.fillStyle = '#ff3131';
-                c.shadowBlur = 12; c.shadowColor = '#ff3131';
-                c.beginPath();
-                c.arc(this.apple.x+10, this.apple.y+10, 8, 0, Math.PI*2);
-                c.fill();
+                c.fillStyle = '#000'; c.fillRect(0,0,400,400);
+                c.fillStyle = '#ff3131'; c.shadowBlur = 12; c.shadowColor = '#ff3131';
+                c.beginPath(); c.arc(this.apple.x+10, this.apple.y+10, 8, 0, Math.PI*2); c.fill();
                 c.shadowBlur = 0;
-
-                // Snake Logic
                 this.body.forEach((s, i) => {
                     c.fillStyle = (i === 0) ? '#00f2ff' : '#006677';
                     c.fillRect(s.x+1, s.y+1, 18, 18);
@@ -381,41 +321,22 @@
             }
         };
 
-        /**
-         * TOUCH SWIPE LOGIC
-         */
-        let sx = 0; let sy = 0;
-        document.getElementById('touchRegion').addEventListener('touchstart', e => {
-            sx = e.touches[0].clientX; sy = e.touches[0].clientY;
-        }, {passive:true});
-
+        let sx = 0, sy = 0;
+        document.getElementById('touchRegion').addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
         document.getElementById('touchRegion').addEventListener('touchend', e => {
-            let dx = e.changedTouches[0].clientX - sx;
-            let dy = e.changedTouches[0].clientY - sy;
-            if(Math.abs(dx) > Math.abs(dy)) {
-                snake.setDir(dx > 0 ? 'RIGHT' : 'LEFT');
-            } else {
-                snake.setDir(dy > 0 ? 'DOWN' : 'UP');
-            }
+            let dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+            if(Math.abs(dx) > Math.abs(dy)) snake.setDir(dx > 0 ? 'RIGHT' : 'LEFT');
+            else snake.setDir(dy > 0 ? 'DOWN' : 'UP');
         }, {passive:true});
 
-        /**
-         * MINESWEEPER LOGIC
-         */
         const mines = {
             reset() {
-                const g = document.getElementById('mGrid');
-                g.innerHTML = '';
+                const g = document.getElementById('mGrid'); g.innerHTML = '';
                 for(let i=0; i<64; i++) {
-                    const t = document.createElement('div');
-                    t.className = 'tile';
+                    const t = document.createElement('div'); t.className = 'tile';
                     t.onclick = () => {
-                        if(Math.random() < 0.15) {
-                            t.innerText = '💣'; t.style.background = '#400';
-                        } else {
-                            t.innerText = Math.floor(Math.random()*4);
-                            t.style.background = '#222';
-                        }
+                        if(Math.random() < 0.15) { t.innerText = '💣'; t.style.background = '#400'; }
+                        else { t.innerText = Math.floor(Math.random()*4); t.style.background = '#222'; }
                     };
                     g.appendChild(t);
                 }
@@ -423,11 +344,7 @@
             }
         };
 
-        // Key Listeners
-        window.addEventListener('keydown', e => {
-            if(e.key.includes('Arrow')) snake.setDir(e.key.replace('Arrow','').toUpperCase());
-        });
-
+        window.addEventListener('keydown', e => { if(e.key.includes('Arrow')) snake.setDir(e.key.replace('Arrow','').toUpperCase()); });
         mines.reset();
     </script>
 </body>
