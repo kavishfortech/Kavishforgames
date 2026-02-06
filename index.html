@@ -13,14 +13,12 @@
             --neon-pink: #ff00ea;
             --neon-red: #ff3131;
             --bg-black: #050508;
-            --panel-bg: rgba(10, 10, 15, 0.98);
+            --panel-bg: rgba(12, 12, 20, 0.98);
         }
 
-        /* Prevent scrolling on mobile when swiping the game */
         * { 
             box-sizing: border-box; 
             margin: 0; padding: 0; 
-            outline: none; 
             touch-action: manipulation;
         }
 
@@ -35,223 +33,241 @@
             align-items: center;
         }
 
-        /* --- THE DYNAMIC COLOR BOX --- */
-        .header-container {
+        /* --- THE DYNAMIC COLOR BOX HEADER --- */
+        .header-section {
             width: 100%;
-            padding: 40px 20px;
+            padding: 40px 15px;
             display: flex;
             justify-content: center;
             background: #000;
             border-bottom: 2px solid var(--neon-blue);
         }
 
-        .animated-name-box {
-            padding: 30px 50px;
+        .color-shift-box {
+            padding: 30px 40px;
             border: 4px solid var(--neon-blue);
-            border-radius: 15px;
+            border-radius: 12px;
             text-align: center;
             background: rgba(0, 0, 0, 0.9);
-            animation: borderFlow 6s infinite alternate;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-            width: 90%;
-            max-width: 600px;
+            animation: borderCycle 8s infinite alternate;
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
+            width: 100%;
+            max-width: 650px;
         }
 
-        @keyframes borderFlow {
-            0% { border-color: var(--neon-blue); box-shadow: 0 0 30px var(--neon-blue); }
-            50% { border-color: var(--neon-pink); box-shadow: 0 0 30px var(--neon-pink); }
-            100% { border-color: var(--neon-green); box-shadow: 0 0 30px var(--neon-green); }
+        @keyframes borderCycle {
+            0% { border-color: var(--neon-blue); box-shadow: 0 0 35px var(--neon-blue); }
+            50% { border-color: var(--neon-pink); box-shadow: 0 0 35px var(--neon-pink); }
+            100% { border-color: var(--neon-green); box-shadow: 0 0 35px var(--neon-green); }
         }
 
-        .animated-name-box h1 {
+        .color-shift-box h1 {
             font-family: 'Syncopate', sans-serif;
-            font-size: clamp(1.5rem, 8vw, 4rem);
-            letter-spacing: -2px;
-            animation: textFlow 6s infinite alternate;
+            font-size: clamp(1.8rem, 7vw, 3.8rem);
+            letter-spacing: -3px;
+            animation: textCycle 8s infinite alternate;
         }
 
-        @keyframes textFlow {
+        @keyframes textCycle {
             0% { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
             50% { color: var(--neon-pink); text-shadow: 0 0 15px var(--neon-pink); }
             100% { color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
         }
 
-        /* --- RESPONSIVE DASHBOARD GRID --- */
-        .dashboard {
+        /* --- LAYOUT ENGINE --- */
+        .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            padding: 25px;
             width: 100%;
             max-width: 1200px;
         }
 
-        /* Horizontal/Landscape adjustments */
-        @media (orientation: landscape) and (max-height: 600px) {
-            .dashboard { grid-template-columns: 1fr 1fr; }
-            .header-container { padding: 15px; }
-            .animated-name-box { padding: 10px; }
-        }
-
-        .card {
+        .engine-card {
             background: var(--panel-bg);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 25px;
-            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
         }
 
-        .card-title {
-            font-size: 1rem;
+        .card-label {
+            font-size: 0.9rem;
             color: var(--neon-blue);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            font-weight: 800;
         }
 
-        /* --- SNAKE ENGINE STYLING --- */
-        .game-area {
+        /* --- SNAKE SYSTEM --- */
+        .game-viewport {
             position: relative;
             width: 100%;
-            max-width: 340px;
+            max-width: 320px;
             aspect-ratio: 1/1;
             background: #000;
-            border: 3px solid #222;
-            border-radius: 10px;
+            border: 2px solid #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         canvas {
-            width: 100% !important;
-            height: 100% !important;
+            width: 100%; height: 100%;
             display: block;
         }
 
-        .score-row {
+        .score-panel {
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            font-size: 1.2rem;
+            padding: 10px 5px;
+            font-size: 1.1rem;
             color: var(--neon-green);
         }
 
-        /* --- MOBILE CONTROLS --- */
-        .mobile-controls {
+        /* --- DIRECTIONAL CONTROLS --- */
+        .joypad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 20px;
+            gap: 12px;
+            margin: 20px 0;
         }
 
-        .ctrl-btn {
-            width: 60px; height: 60px;
-            background: rgba(255,255,255,0.05);
+        .btn-dir {
+            width: 65px; height: 65px;
+            background: #111;
             border: 2px solid var(--neon-blue);
             color: #fff;
-            border-radius: 50%;
-            font-size: 20px;
+            border-radius: 15px;
+            font-size: 22px;
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* --- MINESWEEPER GRID --- */
-        .m-grid {
+        /* --- ACTION BUTTONS --- */
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-ui {
+            flex: 1;
+            padding: 16px;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-ui:active { background: var(--neon-blue); color: #000; }
+
+        .btn-abort {
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+        }
+
+        .btn-abort:active { background: var(--neon-red); color: #fff; }
+
+        /* --- MINESWEEPER --- */
+        .mine-field {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
-            gap: 4px;
+            gap: 5px;
             width: 100%;
             max-width: 320px;
         }
 
-        .m-tile {
+        .tile {
             aspect-ratio: 1/1;
             background: #111;
-            border: 1px solid #333;
+            border: 1px solid #222;
             border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
+            font-size: 0.8rem;
         }
 
-        .btn-action {
-            width: 100%;
-            padding: 15px;
-            margin-top: 15px;
-            background: transparent;
-            border: 2px solid var(--neon-blue);
-            color: var(--neon-blue);
-            text-transform: uppercase;
-            font-weight: 800;
-            border-radius: 10px;
-        }
-
-        /* --- CONSOLE OUTPUT --- */
-        .console {
+        /* --- TERMINAL --- */
+        .sys-log {
             width: 90%;
-            max-width: 1160px;
+            max-width: 1150px;
             background: #000;
             padding: 15px;
-            margin: 20px 0;
+            margin-bottom: 30px;
             border-radius: 10px;
-            height: 100px;
+            height: 80px;
             overflow-y: auto;
             color: var(--neon-green);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             border: 1px solid #111;
+        }
+
+        @media (orientation: landscape) and (max-height: 500px) {
+            .grid-container { grid-template-columns: 1fr 1fr; }
+            .header-section { padding: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="header-container">
-        <div class="animated-name-box">
+    <header class="header-section">
+        <div class="color-shift-box">
             <h1>KAVISH SHAH</h1>
-            <p style="color: #888; letter-spacing: 5px; font-size: 0.7rem;">SYSTEM ARCHITECT</p>
+            <p style="color: #666; font-size: 0.7rem; margin-top: 5px; letter-spacing: 4px;">ELITE SYSTEM ARCHITECT</p>
         </div>
     </header>
 
-    <main class="dashboard">
+    <main class="grid-container">
 
-        <div class="card">
-            <h2 class="card-title">SNAKE VORTEX 6.0</h2>
-            <div class="score-row">
-                <span>DATA: <span id="scoreVal">0</span></span>
-                <span style="color:var(--neon-pink)">FPS: 60</span>
+        <div class="engine-card">
+            <span class="card-label">SNAKE VORTEX 6.1</span>
+            <div class="score-panel">
+                <span>BUFFER: <span id="curScore">0</span></span>
+                <span id="fpsTag" style="color:var(--neon-pink)">SYNC: OK</span>
             </div>
-            <div class="game-area" id="gameArea">
+            <div class="game-viewport" id="touchRegion">
                 <canvas id="snakeCanvas" width="400" height="400"></canvas>
             </div>
-            <div class="mobile-controls">
-                <div></div><button class="ctrl-btn" onpointerdown="snake.setDir('UP')">▲</button><div></div>
-                <button class="ctrl-btn" onpointerdown="snake.setDir('LEFT')">◀</button>
-                <button class="ctrl-btn" onpointerdown="snake.setDir('DOWN')">▼</button>
-                <button class="ctrl-btn" onpointerdown="snake.setDir('RIGHT')">▶</button>
+            <div class="joypad">
+                <div></div><button class="btn-dir" onpointerdown="snake.setDir('UP')">▲</button><div></div>
+                <button class="btn-dir" onpointerdown="snake.setDir('LEFT')">◀</button>
+                <button class="btn-dir" onpointerdown="snake.setDir('DOWN')">▼</button>
+                <button class="btn-dir" onpointerdown="snake.setDir('RIGHT')">▶</button>
             </div>
-            <button class="btn-action" onclick="snake.init()">INITIALIZE</button>
+            <div class="btn-row">
+                <button class="btn-ui" onclick="snake.init()">INITIALIZE</button>
+                <button class="btn-ui btn-abort" onclick="snake.abort()">ABORT</button>
+            </div>
         </div>
 
-        <div class="card">
-            <h2 class="card-title">MINESWEEPER MATRIX</h2>
-            <div class="m-grid" id="mineGrid"></div>
-            <button class="btn-action" onclick="mines.boot()">REBOOT MATRIX</button>
+        <div class="engine-card">
+            <span class="card-label">MINESWEEPER MATRIX</span>
+            <div class="mine-field" id="mGrid"></div>
+            <button class="btn-ui" style="margin-top: 20px; width: 100%;" onclick="mines.reset()">REBOOT MATRIX</button>
         </div>
 
     </main>
 
-    <div class="console" id="log">[SYS] Ready. Input lag optimized for mobile...</div>
+    <div class="sys-log" id="termLog">[SYS] Kernal Loaded. All systems nominal.</div>
 
     <script>
-        const log = (m) => {
-            const l = document.getElementById('log');
-            l.innerHTML += `<br>> ${m}`;
+        const term = (msg) => {
+            const l = document.getElementById('termLog');
+            l.innerHTML += `<br>> ${msg}`;
             l.scrollTop = l.scrollHeight;
         };
 
         /**
          * ZERO-DELAY SNAKE ENGINE
-         * Uses RequestAnimationFrame for smooth 60fps movement
+         * Optimized for mobile touch-response and high FPS.
          */
         const snake = {
             canvas: document.getElementById('snakeCanvas'),
@@ -262,19 +278,28 @@
             nextDir: 'RIGHT',
             score: 0,
             active: false,
-            lastTime: 0,
-            speed: 120, // ms per move
+            lastTick: 0,
+            frameReq: null,
 
             init() {
+                this.abort();
                 this.body = [{x:200, y:200}, {x:180, y:200}, {x:160, y:200}];
                 this.dir = 'RIGHT';
                 this.nextDir = 'RIGHT';
                 this.score = 0;
                 this.active = true;
                 this.spawnApple();
-                document.getElementById('scoreVal').innerText = "0";
-                log("Engine Online. Swiping/Buttons enabled.");
-                requestAnimationFrame((t) => this.loop(t));
+                document.getElementById('curScore').innerText = "0";
+                term("Engine Booted. Apple Synced.");
+                this.frameReq = requestAnimationFrame((t) => this.run(t));
+            },
+
+            abort() {
+                this.active = false;
+                cancelAnimationFrame(this.frameReq);
+                this.ctx.fillStyle = "#000";
+                this.ctx.fillRect(0,0,400,400);
+                term("SEQUENCE ABORTED.");
             },
 
             spawnApple() {
@@ -291,19 +316,18 @@
                 if(d === 'RIGHT' && this.dir !== 'LEFT') this.nextDir = 'RIGHT';
             },
 
-            loop(timeStamp) {
+            run(t) {
                 if(!this.active) return;
-
-                const delta = timeStamp - this.lastTime;
-                if(delta > this.speed) {
-                    this.lastTime = timeStamp;
-                    this.tick();
+                const delta = t - this.lastTick;
+                if(delta > 110) { // Speed adjustment
+                    this.lastTick = t;
+                    this.update();
                 }
-                this.render();
-                requestAnimationFrame((t) => this.loop(t));
+                this.draw();
+                this.frameReq = requestAnimationFrame((t) => this.run(t));
             },
 
-            tick() {
+            update() {
                 this.dir = this.nextDir;
                 const head = {...this.body[0]};
 
@@ -312,7 +336,7 @@
                 if(this.dir === 'LEFT') head.x -= 20;
                 if(this.dir === 'RIGHT') head.x += 20;
 
-                // --- VORTEX BORDER WRAP ---
+                // VORTEX WRAP
                 if(head.x < 0) head.x = 380;
                 if(head.x >= 400) head.x = 0;
                 if(head.y < 0) head.y = 380;
@@ -321,94 +345,90 @@
                 // Collision
                 if(this.body.some(s => s.x === head.x && s.y === head.y)) {
                     this.active = false;
-                    log("Crash detected. Score: " + this.score);
+                    term("CRITICAL ERROR: Collision. Score: " + this.score);
                     return;
                 }
 
                 this.body.unshift(head);
 
-                // Eat Apple
                 if(head.x === this.apple.x && head.y === this.apple.y) {
                     this.score += 10;
-                    document.getElementById('scoreVal').innerText = this.score;
+                    document.getElementById('curScore').innerText = this.score;
                     this.spawnApple();
-                    // Speed up slightly
-                    if(this.speed > 60) this.speed -= 1;
                 } else {
                     this.body.pop();
                 }
             },
 
-            render() {
+            draw() {
                 const c = this.ctx;
                 c.fillStyle = '#000';
                 c.fillRect(0,0,400,400);
 
-                // Apple
+                // Apple Logic
                 c.fillStyle = '#ff3131';
-                c.shadowBlur = 10; c.shadowColor = '#ff3131';
+                c.shadowBlur = 12; c.shadowColor = '#ff3131';
                 c.beginPath();
                 c.arc(this.apple.x+10, this.apple.y+10, 8, 0, Math.PI*2);
                 c.fill();
-
-                // Snake
                 c.shadowBlur = 0;
+
+                // Snake Logic
                 this.body.forEach((s, i) => {
-                    c.fillStyle = (i === 0) ? '#00f2ff' : '#007788';
+                    c.fillStyle = (i === 0) ? '#00f2ff' : '#006677';
                     c.fillRect(s.x+1, s.y+1, 18, 18);
                 });
             }
         };
 
-        // --- SWIPE GESTURES FOR MOBILE ---
-        let touchStartX = 0; let touchStartY = 0;
-        document.getElementById('gameArea').addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        }, false);
+        /**
+         * TOUCH SWIPE LOGIC
+         */
+        let sx = 0; let sy = 0;
+        document.getElementById('touchRegion').addEventListener('touchstart', e => {
+            sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+        }, {passive:true});
 
-        document.getElementById('gameArea').addEventListener('touchend', e => {
-            let x = e.changedTouches[0].screenX;
-            let y = e.changedTouches[0].screenY;
-            let dx = x - touchStartX;
-            let dy = y - touchStartY;
-
-            if (Math.abs(dx) > Math.abs(dy)) {
+        document.getElementById('touchRegion').addEventListener('touchend', e => {
+            let dx = e.changedTouches[0].clientX - sx;
+            let dy = e.changedTouches[0].clientY - sy;
+            if(Math.abs(dx) > Math.abs(dy)) {
                 snake.setDir(dx > 0 ? 'RIGHT' : 'LEFT');
             } else {
                 snake.setDir(dy > 0 ? 'DOWN' : 'UP');
             }
-        }, false);
+        }, {passive:true});
 
         /**
          * MINESWEEPER LOGIC
          */
         const mines = {
-            boot() {
-                const g = document.getElementById('mineGrid');
+            reset() {
+                const g = document.getElementById('mGrid');
                 g.innerHTML = '';
                 for(let i=0; i<64; i++) {
                     const t = document.createElement('div');
-                    t.className = 'm-tile';
+                    t.className = 'tile';
                     t.onclick = () => {
                         if(Math.random() < 0.15) {
                             t.innerText = '💣'; t.style.background = '#400';
                         } else {
-                            t.innerText = Math.floor(Math.random() * 3);
+                            t.innerText = Math.floor(Math.random()*4);
                             t.style.background = '#222';
                         }
                     };
                     g.appendChild(t);
                 }
+                term("Matrix Grid Rebooted.");
             }
         };
 
-        // Desktop controls
+        // Key Listeners
         window.addEventListener('keydown', e => {
             if(e.key.includes('Arrow')) snake.setDir(e.key.replace('Arrow','').toUpperCase());
         });
 
-        mines.boot();
+        mines.reset();
     </script>
 </body>
 </html>
