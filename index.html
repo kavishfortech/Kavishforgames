@@ -5,175 +5,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kavish Shah - 6th Grader</title>
     <style>
-        :root {
-            --red: #ff4d4d;
-            --blue: #4d94ff;
-            --bg: #f4f7f6;
-        }
-        body { font-family: 'Arial Black', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; color: #333; }
         
-        /* Header Section */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            max-width: 900px;
-            margin: 0 auto 30px;
-        }
-        .profile-pic {
-            width: 180px;
-            height: 180px;
-            border-radius: 20px;
-            object-fit: cover;
-            margin-right: 40px;
-            border: 6px solid #333;
-        }
-        .text-info h1 { font-size: 3.5rem; margin: 0; color: #222; }
-        .text-info p { font-size: 1.5rem; color: #666; margin: 5px 0; }
+        /* Profile Header */
+        .header { display: flex; align-items: center; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 900px; margin: 0 auto 30px; }
+        .profile-pic { width: 150px; height: 150px; border-radius: 12px; margin-right: 30px; border: 4px solid #4a90e2; object-fit: cover; }
+        h1 { font-size: 3rem; margin: 0; text-transform: uppercase; }
+        .grade { font-size: 1.5rem; color: #4a90e2; font-weight: bold; margin: 0; }
 
-        /* Ludo Layout */
-        .ludo-container {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 500px;
-            margin: 0 auto 40px;
-        }
-        #ludo-board {
-            display: grid;
-            grid-template-columns: repeat(6, 50px);
-            grid-template-rows: repeat(6, 50px);
-            gap: 5px;
-            margin: 20px auto;
-            background: #333;
-            padding: 10px;
-            width: fit-content;
-        }
-        .cell {
-            width: 50px;
-            height: 50px;
-            background: #eee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .piece { width: 35px; height: 35px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        .red-p { background: var(--red); }
-        .blue-p { background: var(--blue); }
+        /* Game Layout */
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+        .card { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        .turn-indicator { font-size: 1.2rem; margin-bottom: 10px; font-weight: bold; }
-        .red-turn { color: var(--red); }
-        .blue-turn { color: var(--blue); }
+        /* Snake Style */
+        #snakeCanvas { background: #222; border-radius: 8px; display: block; margin: 10px auto; }
+        
+        /* Ludo Style */
+        .ludo-board { display: grid; grid-template-columns: repeat(6, 45px); gap: 4px; background: #444; padding: 8px; width: fit-content; margin: 10px auto; border-radius: 5px; }
+        .cell { width: 45px; height: 45px; background: #eee; display: flex; align-items: center; justify-content: center; position: relative; }
+        .piece { width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; cursor: pointer; }
+        .red-p { background: #ff4d4d; }
+        .blue-p { background: #4d94ff; }
+        
+        /* Minesweeper Style */
+        .ms-grid { display: grid; grid-template-columns: repeat(8, 30px); gap: 2px; justify-content: center; margin-top: 10px; }
+        .ms-cell { width: 30px; height: 30px; background: #ccc; border: 1px solid #999; cursor: pointer; line-height: 30px; font-weight: bold; }
+        .revealed { background: #eee; }
 
-        /* Other Games */
-        .other-games { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .mini-card { background: white; padding: 15px; border-radius: 15px; text-align: center; width: 300px; }
-        canvas { background: #000; border-radius: 10px; }
+        button { background: #4a90e2; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background: #357abd; }
     </style>
 </head>
 <body>
 
-<div class="profile-header">
-    <img src="Image.png" alt="Kavish Shah" class="profile-pic">
-    <div class="text-info">
+<div class="header">
+    <img src="image.png" alt="Kavish Shah" class="profile-pic">
+    <div>
         <h1>KAVISH SHAH</h1>
-        <p>6TH GRADER</p>
+        <p class="grade">6TH GRADER</p>
     </div>
 </div>
 
-<div class="ludo-container">
-    <h2>2-Player Ludo (Red vs Blue)</h2>
-    <div id="turn-text" class="turn-indicator red-turn">Red's Turn</div>
-    <div id="ludo-board"></div>
-    <div style="font-size: 40px;" id="ludo-dice">🎲</div>
-    <button onclick="rollLudo()" id="roll-btn" style="padding:10px 20px; font-size:18px; cursor:pointer;">Roll Dice</button>
-</div>
-
-<div class="other-games">
-    <div class="mini-card">
-        <h3>Snake Game</h3>
-        <canvas id="snakeGame" width="250" height="250"></canvas>
+<div class="game-grid">
+    <div class="card">
+        <h3>🐍 Snake Game</h3>
+        <canvas id="snakeCanvas" width="250" height="250"></canvas>
+        <button onclick="initSnake()">Start/Reset Snake</button>
+        <p style="font-size: 0.8rem;">Click button then use Arrows to move</p>
     </div>
-    <div class="mini-card">
-        <h3>Minesweeper</h3>
-        <div id="mines-grid" style="display:grid; grid-template-columns:repeat(5, 40px); gap:5px; justify-content:center;"></div>
+
+    <div class="card">
+        <h3>🎲 2-Player Ludo</h3>
+        <div id="ludo-status" style="font-weight:bold; color:red;">Red's Turn</div>
+        <div class="ludo-board" id="ludoBoard"></div>
+        <div id="dice-val" style="font-size: 2rem; margin: 5px;">🎲</div>
+        <button id="rollBtn" onclick="rollLudo()">Roll Dice</button>
+    </div>
+
+    <div class="card">
+        <h3>💣 Minesweeper</h3>
+        <div id="msGrid" class="ms-grid"></div>
+        <button onclick="initMines()">Reset Mines</button>
     </div>
 </div>
 
 <script>
-    // LUDO LOGIC
-    let turn = 'red';
-    let diceVal = 0;
-    let redPos = 0;
-    let bluePos = 35; // Start blue at opposite side
-    const boardSize = 36;
-    const boardEl = document.getElementById('ludo-board');
+    // --- SNAKE GAME LOGIC ---
+    let sCanvas = document.getElementById("snakeCanvas");
+    let sCtx = sCanvas.getContext("2d");
+    let snake, food, dx, dy, snakeInterval;
 
-    function createBoard() {
-        boardEl.innerHTML = '';
-        for(let i=0; i<boardSize; i++) {
-            const cell = document.createElement('div');
-            cell.className = 'cell';
-            if(i === redPos) cell.innerHTML = '<div class="piece red-p" onclick="movePiece(\'red\')"></div>';
-            if(i === bluePos) cell.innerHTML = '<div class="piece blue-p" onclick="movePiece(\'blue\')"></div>';
-            boardEl.appendChild(cell);
-        }
+    function initSnake() {
+        clearInterval(snakeInterval);
+        snake = [{x: 100, y: 100}, {x: 90, y: 100}, {x: 80, y: 100}];
+        dx = 10; dy = 0;
+        spawnFood();
+        snakeInterval = setInterval(drawSnake, 100);
     }
 
+    function spawnFood() {
+        food = { x: Math.floor(Math.random()*24)*10, y: Math.floor(Math.random()*24)*10 };
+    }
+
+    function drawSnake() {
+        sCtx.fillStyle = "#222"; sCtx.fillRect(0,0,250,250);
+        sCtx.fillStyle = "lime";
+        snake.forEach(part => sCtx.fillRect(part.x, part.y, 9, 9));
+        sCtx.fillStyle = "red"; sCtx.fillRect(food.x, food.y, 9, 9);
+
+        let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+        if(head.x < 0 || head.x >= 250 || head.y < 0 || head.y >= 250) return initSnake();
+        snake.unshift(head);
+        if(head.x === food.x && head.y === food.y) spawnFood(); else snake.pop();
+    }
+
+    window.addEventListener("keydown", e => {
+        if(e.key==="ArrowUp" && dy===0){dx=0; dy=-10;}
+        if(e.key==="ArrowDown" && dy===0){dx=0; dy=10;}
+        if(e.key==="ArrowLeft" && dx===0){dx=-10; dy=0;}
+        if(e.key==="ArrowRight" && dx===0){dx=10; dy=0;}
+    });
+
+    // --- LUDO 2-PLAYER LOGIC ---
+    let turn = 'red', dice = 0, redPos = 0, bluePos = 18;
+    function renderLudo() {
+        const board = document.getElementById("ludoBoard");
+        board.innerHTML = '';
+        for(let i=0; i<36; i++) {
+            let c = document.createElement("div"); c.className = "cell";
+            if(i === redPos) c.innerHTML = '<div class="piece red-p" onclick="moveLudo(\'red\')"></div>';
+            if(i === bluePos) c.innerHTML = '<div class="piece blue-p" onclick="moveLudo(\'blue\')"></div>';
+            board.appendChild(c);
+        }
+    }
     function rollLudo() {
-        diceVal = Math.floor(Math.random() * 6) + 1;
-        document.getElementById('ludo-dice').innerText = ['🎲','⚀','⚁','⚂','⚃','⚄','⚅'][diceVal];
-        document.getElementById('roll-btn').disabled = true;
+        dice = Math.floor(Math.random()*6)+1;
+        document.getElementById("dice-val").innerText = ["","⚀","⚁","⚂","⚃","⚄","⚅"][dice];
+        document.getElementById("rollBtn").disabled = true;
+    }
+    function moveLudo(p) {
+        if(dice === 0 || p !== turn) return;
+        if(p === 'red') { redPos = (redPos + dice)%36; turn = 'blue'; }
+        else { bluePos = (bluePos + dice)%36; turn = 'red'; }
+        dice = 0; 
+        document.getElementById("rollBtn").disabled = false;
+        document.getElementById("ludo-status").innerText = turn.toUpperCase() + "'s Turn";
+        document.getElementById("ludo-status").style.color = turn;
+        renderLudo();
     }
 
-    function movePiece(player) {
-        if(diceVal === 0) return;
-        if(player !== turn) return;
-
-        if(player === 'red') {
-            redPos = (redPos + diceVal) % boardSize;
-            turn = 'blue';
-            document.getElementById('turn-text').innerText = "Blue's Turn";
-            document.getElementById('turn-text').className = "turn-indicator blue-turn";
-        } else {
-            bluePos = (bluePos + diceVal) % boardSize;
-            turn = 'red';
-            document.getElementById('turn-text').innerText = "Red's Turn";
-            document.getElementById('turn-text').className = "turn-indicator red-turn";
+    // --- MINESWEEPER LOGIC ---
+    function initMines() {
+        const grid = document.getElementById("msGrid"); grid.innerHTML = '';
+        for(let i=0; i<64; i++) {
+            let c = document.createElement("div"); c.className = "ms-cell";
+            c.onclick = () => { 
+                if(Math.random() < 0.1) { c.innerText = "💣"; c.style.background = "red"; }
+                else { c.innerText = "0"; c.className = "ms-cell revealed"; }
+            };
+            grid.appendChild(c);
         }
-        
-        diceVal = 0;
-        document.getElementById('roll-btn').disabled = false;
-        createBoard();
-    }
-    createBoard();
-
-    // MINESWEEPER SIMPLE
-    const mGrid = document.getElementById('mines-grid');
-    for(let i=0; i<25; i++) {
-        const btn = document.createElement('button');
-        btn.style.width = '40px'; btn.style.height = '40px';
-        btn.onclick = () => btn.innerText = Math.random() > 0.8 ? '💣' : '🚩';
-        mGrid.appendChild(btn);
     }
 
-    // SNAKE SIMPLE
-    const canvas = document.getElementById("snakeGame");
-    const ctx = canvas.getContext("2d");
-    let snake = [{x:10, y:10}];
-    setInterval(() => {
-        ctx.fillStyle = "black"; ctx.fillRect(0,0,250,250);
-        ctx.fillStyle = "lime";
-        snake.forEach(s => ctx.fillRect(s.x, s.y, 10, 10));
-    }, 100);
+    renderLudo();
+    initMines();
 </script>
-
 </body>
 </html>
