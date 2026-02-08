@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KAVISH ARCHITECT | HUB V5.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAVISH ARCHITECT | HUB RECOVERY</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Share+Tech+Mono&display=swap');
 
@@ -14,43 +14,46 @@
             --bg-dark: #020205;
         }
 
-        * { box-sizing: border-box; user-select: none; touch-action: none; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background: var(--bg-dark);
             font-family: 'Share Tech Mono', monospace;
-            overflow: hidden; height: 100vh;
-            display: flex; flex-direction: column; color: #fff;
+            color: #fff;
+            min-height: 100vh;
+            /* Scroll enabled again */
+            overflow-y: auto; 
         }
 
         /* --- RGB TRADEMARK HEADER --- */
         #trademark-header {
-            width: 100%; padding: 15px 0; text-align: center;
-            font-family: 'Syncopate'; font-size: 1.2rem; letter-spacing: 6px;
+            width: 100%; padding: 20px 0; text-align: center;
+            font-family: 'Syncopate'; font-size: 1.3rem; letter-spacing: 6px;
             border-bottom: 3px solid #fff; background: #000;
             animation: rgbShift 3s linear infinite;
         }
         @keyframes rgbShift {
-            0% { border-color: #f00; color: #f00; box-shadow: 0 0 15px #f00; }
-            33% { border-color: #0f0; color: #0f0; box-shadow: 0 0 15px #0f0; }
-            66% { border-color: #00f; color: #00f; box-shadow: 0 0 15px #00f; }
-            100% { border-color: #f00; color: #f00; box-shadow: 0 0 15px #f00; }
+            0% { border-color: #f00; color: #f00; }
+            33% { border-color: #0f0; color: #0f0; }
+            66% { border-color: #00f; color: #00f; }
+            100% { border-color: #f00; color: #f00; }
         }
 
         .hub-container {
-            flex-grow: 1; display: flex; justify-content: center;
-            align-items: center; gap: 30px; padding: 20px; flex-wrap: wrap;
+            display: flex; justify-content: center;
+            align-items: flex-start; gap: 30px; padding: 40px 20px; flex-wrap: wrap;
         }
 
         .game-card {
-            background: #080810; border: 1px solid #1a1a30;
-            padding: 15px; border-radius: 8px; position: relative;
-            width: 290px; display: flex; flex-direction: column;
+            background: #0a0a15; border: 1px solid #1a1a35;
+            padding: 20px; border-radius: 4px; position: relative;
+            width: 300px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
         .game-header {
             display: flex; justify-content: space-between;
-            font-size: 0.75rem; color: var(--neon-blue); margin-bottom: 10px;
+            font-size: 0.8rem; color: var(--neon-blue); margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
         .canvas-area {
@@ -66,8 +69,9 @@
         .cell {
             width: 30px; height: 30px; background: #111;
             border: 1px solid #222; text-align: center; line-height: 30px;
-            cursor: pointer; font-size: 0.8rem;
+            cursor: pointer; font-size: 0.9rem; color: #555;
         }
+        .cell:active { background: #222; }
 
         /* --- OVERLAYS --- */
         .overlay {
@@ -78,17 +82,15 @@
         .hidden { display: none !important; }
 
         .btn {
-            padding: 10px 20px; margin: 5px; background: none;
-            border: 1px solid var(--neon-blue); color: var(--neon-blue);
-            font-family: 'Syncopate'; font-size: 0.6rem; cursor: pointer;
-            transition: 0.2s;
+            padding: 10px 20px; margin: 8px; background: none;
+            border: 2px solid var(--neon-blue); color: var(--neon-blue);
+            font-family: 'Syncopate'; font-size: 0.65rem; cursor: pointer;
         }
         .btn:hover { background: var(--neon-blue); color: #000; }
         .btn-danger { border-color: var(--danger); color: var(--danger); }
 
-        #system-footer {
-            background: #000; padding: 10px; border-top: 1px solid #222;
-            text-align: center; font-size: 0.7rem; color: #444;
+        footer {
+            padding: 20px; text-align: center; color: #333; font-size: 0.7rem;
         }
     </style>
 </head>
@@ -99,16 +101,16 @@
 <div class="hub-container">
     <div class="game-card">
         <div class="game-header">
-            <span>SNAKE_V5.1</span>
-            <span>FPS: 10 | SCORE: <span id="snk-score">0</span></span>
+            <span>SNAKE.CORE</span>
+            <span>SCORE: <span id="snk-score">0</span></span>
         </div>
         <div class="canvas-area">
             <canvas id="snakeCanvas" width="260" height="260"></canvas>
             <div id="snk-start" class="overlay">
-                <button class="btn" onclick="Snake.init()">START_CORE</button>
+                <button class="btn" onclick="Snake.init()">START GAME</button>
             </div>
             <div id="snk-dead" class="overlay hidden">
-                <h3 style="color:var(--danger); font-size:0.7rem; margin-bottom:10px;">SYSTEM_CRASH</h3>
+                <h2 style="color:var(--danger); font-size:0.8rem; margin-bottom:10px;">GAME OVER</h2>
                 <button class="btn" onclick="Snake.init()">RESTART</button>
                 <button class="btn btn-danger" onclick="Snake.quit()">QUIT</button>
             </div>
@@ -117,16 +119,16 @@
 
     <div class="game-card">
         <div class="game-header">
-            <span>MINES_V5.1</span>
-            <span>SCORE: <span id="mne-score">0</span></span>
+            <span>MINES.EXE</span>
+            <span>POINTS: <span id="mne-score">0</span></span>
         </div>
         <div class="canvas-area" style="display:flex; align-items:center;">
             <div id="mine-grid"></div>
             <div id="mne-start" class="overlay">
-                <button class="btn" onclick="Mines.init()">START_MINES</button>
+                <button class="btn" onclick="Mines.init()">START GAME</button>
             </div>
             <div id="mne-dead" class="overlay hidden">
-                <h3 id="mne-status" style="color:var(--danger); font-size:0.7rem; margin-bottom:10px;">DETONATED</h3>
+                <h2 id="mne-status" style="color:var(--danger); font-size:0.8rem; margin-bottom:10px;">DETONATED</h2>
                 <button class="btn" onclick="Mines.init()">RESTART</button>
                 <button class="btn btn-danger" onclick="Mines.quit()">QUIT</button>
             </div>
@@ -134,15 +136,9 @@
     </div>
 </div>
 
-<div id="system-footer">ARCHITECTURE STABLE | FRIDAY BUILD | INDIA</div>
+<footer>SYSTEM_ID: ARCHITECT_V5.2 | FRIDAY RECOVERY</footer>
 
 <script>
-/**
- * V5.1 CORE LOGIC
- * NO LAPTOP/MOBILE SPECIFIC DETECTION
- * UNIVERSAL ARROW CONTROLS ONLY
- */
-
 /* --- SNAKE LOGIC --- */
 const snkCanvas = document.getElementById('snakeCanvas');
 const sCtx = snkCanvas.getContext('2d');
@@ -179,7 +175,7 @@ const Snake = {
     }
 };
 
-/* --- MINES LOGIC --- */
+/* --- MINESWEEPER LOGIC --- */
 const Mines = {
     active: false, score: 0,
     init() {
@@ -192,7 +188,7 @@ const Mines = {
     quit() { this.active = false; document.getElementById('mne-dead').classList.add('hidden'); document.getElementById('mne-start').classList.remove('hidden'); document.getElementById('mine-grid').innerHTML=''; },
     die(win) {
         this.active = false;
-        document.getElementById('mne-status').innerText = win ? "GRID_SECURED" : "DETONATED";
+        document.getElementById('mne-status').innerText = win ? "GRID SECURED" : "DETONATED";
         document.getElementById('mne-dead').classList.remove('hidden');
     },
     render() {
@@ -204,14 +200,12 @@ const Mines = {
             c.onclick = () => {
                 if(!this.active) return;
                 if(Math.random() > 0.88) {
-                    c.innerHTML = '💣'; c.style.background = 'red'; this.die(false);
-                } else {
-                    if(c.innerHTML === '') {
-                        c.innerHTML = Math.floor(Math.random()*3);
-                        c.style.background = '#050505'; this.score += 5;
-                        document.getElementById('mne-score').innerText = this.score;
-                        if(this.score >= 100) this.die(true);
-                    }
+                    c.innerHTML = '💣'; c.style.background = 'red'; c.style.color = 'white'; this.die(false);
+                } else if(c.innerHTML === '') {
+                    c.innerHTML = Math.floor(Math.random()*4);
+                    c.style.background = '#050505'; this.score += 5;
+                    document.getElementById('mne-score').innerText = this.score;
+                    if(this.score >= 100) this.die(true);
                 }
             };
             gridEl.appendChild(c);
@@ -219,14 +213,23 @@ const Mines = {
     }
 };
 
-/* --- CONTROL HANDLER --- */
+/* --- UNIVERSAL KEYBOARD CONTROLS (ARROWS + WASD) --- */
 window.addEventListener('keydown', e => {
     if(!Snake.active) return;
-    const k = e.key;
-    if(k === "ArrowUp" && Snake.dir.y === 0) Snake.dir = {x:0, y:-1};
-    if(k === "ArrowDown" && Snake.dir.y === 0) Snake.dir = {x:0, y:1};
-    if(k === "ArrowLeft" && Snake.dir.x === 0) Snake.dir = {x:-1, y:0};
-    if(k === "ArrowRight" && Snake.dir.x === 0) Snake.dir = {x:1, y:0};
+    const key = e.key;
+
+    // Up
+    if((key === "ArrowUp" || key.toLowerCase() === "w") && Snake.dir.y === 0) 
+        Snake.dir = {x:0, y:-1};
+    // Down
+    if((key === "ArrowDown" || key.toLowerCase() === "s") && Snake.dir.y === 0) 
+        Snake.dir = {x:0, y:1};
+    // Left
+    if((key === "ArrowLeft" || key.toLowerCase() === "a") && Snake.dir.x === 0) 
+        Snake.dir = {x:-1, y:0};
+    // Right
+    if((key === "ArrowRight" || key.toLowerCase() === "d") && Snake.dir.x === 0) 
+        Snake.dir = {x:1, y:0};
 });
 </script>
 </body>
