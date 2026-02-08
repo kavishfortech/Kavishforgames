@@ -2,235 +2,367 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAVISH ARCHITECT | HUB RECOVERY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KAVISH SHAH | THE ARCHITECT</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Share+Tech+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=JetBrains+Mono:wght@400;800&display=swap');
 
         :root {
-            --neon-blue: #00f3ff;
-            --neon-pink: #bc13fe;
-            --danger: #ff2e2e;
-            --bg-dark: #020205;
+            --neon-blue: #00f2ff;
+            --neon-green: #39ff14;
+            --neon-pink: #ff00ea;
+            --neon-red: #ff3131;
+            --bg-black: #050508;
+            --panel-bg: rgba(12, 12, 20, 0.98);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
 
         body {
-            background: var(--bg-dark);
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-black);
             color: #fff;
+            overflow-x: hidden;
             min-height: 100vh;
-            /* Scroll enabled again */
-            overflow-y: auto; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* --- RGB TRADEMARK HEADER --- */
-        #trademark-header {
-            width: 100%; padding: 20px 0; text-align: center;
-            font-family: 'Syncopate'; font-size: 1.3rem; letter-spacing: 6px;
-            border-bottom: 3px solid #fff; background: #000;
-            animation: rgbShift 3s linear infinite;
-        }
-        @keyframes rgbShift {
-            0% { border-color: #f00; color: #f00; }
-            33% { border-color: #0f0; color: #0f0; }
-            66% { border-color: #00f; color: #00f; }
-            100% { border-color: #f00; color: #f00; }
+        /* --- THE DYNAMIC COLOR BOX HEADER --- */
+        .header-section {
+            width: 100%;
+            padding: 40px 15px;
+            display: flex;
+            justify-content: center;
+            background: #000;
+            border-bottom: 2px solid var(--neon-blue);
         }
 
-        .hub-container {
-            display: flex; justify-content: center;
-            align-items: flex-start; gap: 30px; padding: 40px 20px; flex-wrap: wrap;
+        .color-shift-box {
+            padding: 30px 40px;
+            border: 4px solid var(--neon-blue);
+            border-radius: 12px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.9);
+            animation: borderCycle 8s infinite alternate;
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
+            width: 100%;
+            max-width: 650px;
         }
 
-        .game-card {
-            background: #0a0a15; border: 1px solid #1a1a35;
-            padding: 20px; border-radius: 4px; position: relative;
-            width: 300px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        @keyframes borderCycle {
+            0% { border-color: var(--neon-blue); box-shadow: 0 0 35px var(--neon-blue); }
+            50% { border-color: var(--neon-pink); box-shadow: 0 0 35px var(--neon-pink); }
+            100% { border-color: var(--neon-green); box-shadow: 0 0 35px var(--neon-green); }
         }
 
-        .game-header {
-            display: flex; justify-content: space-between;
-            font-size: 0.8rem; color: var(--neon-blue); margin-bottom: 15px;
+        .color-shift-box h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(1.8rem, 7vw, 3.8rem);
+            letter-spacing: -3px;
+            animation: textCycle 8s infinite alternate;
+        }
+
+        @keyframes textCycle {
+            0% { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
+            50% { color: var(--neon-pink); text-shadow: 0 0 15px var(--neon-pink); }
+            100% { color: var(--neon-green); text-shadow: 0 0 15px var(--neon-green); }
+        }
+
+        /* --- LAYOUT ENGINE --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            padding: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .engine-card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .card-label {
+            font-size: 0.9rem;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
             text-transform: uppercase;
         }
 
-        .canvas-area {
-            position: relative; width: 260px; height: 260px;
-            background: #000; border: 1px solid #333; margin: 0 auto;
+        /* --- GAME VIEWPORTS --- */
+        .game-viewport {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 1/1;
+            background: #000;
+            border: 2px solid #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        canvas { width: 100%; height: 100%; display: block; }
+
+        .score-panel {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 5px;
+            font-size: 1.1rem;
+        }
+
+        /* --- OVERLAY SYSTEM --- */
+        .death-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .death-overlay h3 { color: var(--neon-red); font-size: 2rem; margin-bottom: 20px; font-family: 'Syncopate'; }
+
+        /* --- BUTTONS & CONTROLS --- */
+        .btn-row { display: flex; gap: 10px; width: 100%; margin-top: 10px; }
+        .btn-ui {
+            flex: 1; padding: 16px; background: transparent;
+            border: 2px solid var(--neon-blue); color: var(--neon-blue);
+            font-weight: 800; text-transform: uppercase; border-radius: 8px; cursor: pointer;
+            font-family: 'JetBrains Mono';
+        }
+        .btn-ui:active { background: var(--neon-blue); color: #000; }
+        .btn-abort { border-color: var(--neon-red); color: var(--neon-red); }
+
+        .joypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+        .btn-dir { width: 65px; height: 65px; background: #111; border: 2px solid var(--neon-blue); color: #fff; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
 
         /* --- MINESWEEPER GRID --- */
-        #mine-grid {
-            display: grid; grid-template-columns: repeat(8, 30px);
-            gap: 2px; margin: auto;
+        .mine-field {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 5px;
+            width: 100%;
+            height: 100%;
+            padding: 10px;
         }
-        .cell {
-            width: 30px; height: 30px; background: #111;
-            border: 1px solid #222; text-align: center; line-height: 30px;
-            cursor: pointer; font-size: 0.9rem; color: #555;
-        }
-        .cell:active { background: #222; }
 
-        /* --- OVERLAYS --- */
-        .overlay {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.9);
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; z-index: 10;
+        .tile {
+            aspect-ratio: 1/1;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
         }
-        .hidden { display: none !important; }
 
-        .btn {
-            padding: 10px 20px; margin: 8px; background: none;
-            border: 2px solid var(--neon-blue); color: var(--neon-blue);
-            font-family: 'Syncopate'; font-size: 0.65rem; cursor: pointer;
-        }
-        .btn:hover { background: var(--neon-blue); color: #000; }
-        .btn-danger { border-color: var(--danger); color: var(--danger); }
-
-        footer {
-            padding: 20px; text-align: center; color: #333; font-size: 0.7rem;
-        }
+        .sys-log { width: 90%; max-width: 1150px; background: #000; padding: 15px; margin-bottom: 30px; border-radius: 10px; height: 80px; overflow-y: auto; color: var(--neon-green); font-size: 0.75rem; border: 1px solid #111; }
     </style>
 </head>
 <body>
 
-<div id="trademark-header">KAVISHFORTECH ARCHITECT</div>
+    <header class="header-section">
+        <div class="color-shift-box">
+            <h1>KAVISH SHAH</h1>
+            <p style="color: #666; font-size: 0.7rem; margin-top: 5px; letter-spacing: 4px;">ELITE SYSTEM ARCHITECT</p>
+        </div>
+    </header>
 
-<div class="hub-container">
-    <div class="game-card">
-        <div class="game-header">
-            <span>SNAKE.CORE</span>
-            <span>SCORE: <span id="snk-score">0</span></span>
-        </div>
-        <div class="canvas-area">
-            <canvas id="snakeCanvas" width="260" height="260"></canvas>
-            <div id="snk-start" class="overlay">
-                <button class="btn" onclick="Snake.init()">START GAME</button>
+    <main class="grid-container">
+        <div class="engine-card">
+            <span class="card-label">SNAKE VORTEX CORE</span>
+            <div class="score-panel">
+                <span style="color:var(--neon-green)">SCORE: <span id="snakeScore">0</span></span>
+                <span style="color:var(--neon-pink)">FPS: <span id="snakeFPS">0</span></span>
             </div>
-            <div id="snk-dead" class="overlay hidden">
-                <h2 style="color:var(--danger); font-size:0.8rem; margin-bottom:10px;">GAME OVER</h2>
-                <button class="btn" onclick="Snake.init()">RESTART</button>
-                <button class="btn btn-danger" onclick="Snake.quit()">QUIT</button>
+            <div class="game-viewport" id="snakeTouch">
+                <canvas id="snakeCanvas" width="400" height="400"></canvas>
+                <div id="snakeOverlay" class="death-overlay">
+                    <h3>WASTED</h3>
+                    <div class="btn-row" style="padding: 0 20px;">
+                        <button class="btn-ui" onclick="snake.init()">RETRY</button>
+                        <button class="btn-ui btn-abort" onclick="snake.abort()">QUIT</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="game-card">
-        <div class="game-header">
-            <span>MINES.EXE</span>
-            <span>POINTS: <span id="mne-score">0</span></span>
-        </div>
-        <div class="canvas-area" style="display:flex; align-items:center;">
-            <div id="mine-grid"></div>
-            <div id="mne-start" class="overlay">
-                <button class="btn" onclick="Mines.init()">START GAME</button>
+            <div class="joypad">
+                <div></div><button class="btn-dir" onpointerdown="snake.setDir('UP')">▲</button><div></div>
+                <button class="btn-dir" onpointerdown="snake.setDir('LEFT')">◀</button>
+                <button class="btn-dir" onpointerdown="snake.setDir('DOWN')">▼</button>
+                <button class="btn-dir" onpointerdown="snake.setDir('RIGHT')">▶</button>
             </div>
-            <div id="mne-dead" class="overlay hidden">
-                <h2 id="mne-status" style="color:var(--danger); font-size:0.8rem; margin-bottom:10px;">DETONATED</h2>
-                <button class="btn" onclick="Mines.init()">RESTART</button>
-                <button class="btn btn-danger" onclick="Mines.quit()">QUIT</button>
+            <div class="btn-row">
+                <button class="btn-ui" onclick="snake.init()">START SNAKE</button>
+                <button class="btn-ui btn-abort" onclick="snake.abort()">ABORT</button>
             </div>
         </div>
-    </div>
-</div>
 
-<footer>SYSTEM_ID: ARCHITECT_V5.2 | FRIDAY RECOVERY</footer>
+        <div class="engine-card">
+            <span class="card-label">MINESWEEPER MATRIX</span>
+            <div class="score-panel">
+                <span style="color:var(--neon-green)">SCORE: <span id="mineScore">0</span></span>
+                <span style="color:var(--neon-pink)">FPS: <span id="mineFPS">0</span></span>
+            </div>
+            <div class="game-viewport">
+                <div id="mGrid" class="mine-field"></div>
+                <div id="mineOverlay" class="death-overlay">
+                    <h3>BREACHED</h3>
+                    <div class="btn-row" style="padding: 0 20px;">
+                        <button class="btn-ui" onclick="mines.init()">RETRY</button>
+                        <button class="btn-ui btn-abort" onclick="mines.quit()">QUIT</button>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <button class="btn-ui" onclick="mines.init()">START MATRIX</button>
+                <button class="btn-ui btn-abort" onclick="mines.quit()">ABORT</button>
+            </div>
+        </div>
+    </main>
 
-<script>
-/* --- SNAKE LOGIC --- */
-const snkCanvas = document.getElementById('snakeCanvas');
-const sCtx = snkCanvas.getContext('2d');
-const Snake = {
-    active: false, body: [], dir: {x:1, y:0}, food: {x:5,y:5}, score: 0,
-    init() {
-        this.body = [{x:10, y:10}]; this.dir = {x:1, y:0}; this.score = 0;
-        this.active = true; this.spawnFood();
-        document.getElementById('snk-score').innerText = "0";
-        document.getElementById('snk-start').classList.add('hidden');
-        document.getElementById('snk-dead').classList.add('hidden');
-        this.loop();
-    },
-    spawnFood() { this.food = { x: Math.floor(Math.random()*26), y: Math.floor(Math.random()*26) }; },
-    quit() { this.active = false; document.getElementById('snk-dead').classList.add('hidden'); document.getElementById('snk-start').classList.remove('hidden'); sCtx.clearRect(0,0,260,260); },
-    die() { this.active = false; document.getElementById('snk-dead').classList.remove('hidden'); },
-    update() {
-        let head = { x: this.body[0].x + this.dir.x, y: this.body[0].y + this.dir.y };
-        if(head.x<0||head.x>25||head.y<0||head.y>25) return this.die();
-        for(let p of this.body) if(head.x===p.x && head.y===p.y) return this.die();
-        this.body.unshift(head);
-        if(head.x===this.food.x && head.y===this.food.y) { this.score+=10; document.getElementById('snk-score').innerText=this.score; this.spawnFood(); }
-        else this.body.pop();
-    },
-    draw() {
-        sCtx.fillStyle="#000"; sCtx.fillRect(0,0,260,260);
-        sCtx.fillStyle="#0ff"; this.body.forEach(p=>sCtx.fillRect(p.x*10, p.y*10, 9, 9));
-        sCtx.fillStyle="#f0f"; sCtx.fillRect(this.food.x*10, this.food.y*10, 9, 9);
-    },
-    loop() {
-        if(!this.active) return;
-        this.update(); this.draw();
-        setTimeout(() => requestAnimationFrame(() => this.loop()), 110);
-    }
-};
+    <div class="sys-log" id="termLog">[SYS] Ready. Manual activation required.</div>
 
-/* --- MINESWEEPER LOGIC --- */
-const Mines = {
-    active: false, score: 0,
-    init() {
-        this.active = true; this.score = 0;
-        document.getElementById('mne-score').innerText = "0";
-        document.getElementById('mne-start').classList.add('hidden');
-        document.getElementById('mne-dead').classList.add('hidden');
-        this.render();
-    },
-    quit() { this.active = false; document.getElementById('mne-dead').classList.add('hidden'); document.getElementById('mne-start').classList.remove('hidden'); document.getElementById('mine-grid').innerHTML=''; },
-    die(win) {
-        this.active = false;
-        document.getElementById('mne-status').innerText = win ? "GRID SECURED" : "DETONATED";
-        document.getElementById('mne-dead').classList.remove('hidden');
-    },
-    render() {
-        const gridEl = document.getElementById('mine-grid');
-        gridEl.innerHTML = '';
-        for(let i=0; i<64; i++) {
-            const c = document.createElement('div');
-            c.className = 'cell';
-            c.onclick = () => {
-                if(!this.active) return;
-                if(Math.random() > 0.88) {
-                    c.innerHTML = '💣'; c.style.background = 'red'; c.style.color = 'white'; this.die(false);
-                } else if(c.innerHTML === '') {
-                    c.innerHTML = Math.floor(Math.random()*4);
-                    c.style.background = '#050505'; this.score += 5;
-                    document.getElementById('mne-score').innerText = this.score;
-                    if(this.score >= 100) this.die(true);
-                }
-            };
-            gridEl.appendChild(c);
+    <script>
+        const term = (msg) => {
+            const l = document.getElementById('termLog');
+            l.innerHTML += `<br>> ${msg}`;
+            l.scrollTop = l.scrollHeight;
+        };
+
+        /* --- FPS UTILITY --- */
+        let lastFrame = 0;
+        function updateFPS(now, elementId) {
+            const dt = now - lastFrame;
+            lastFrame = now;
+            if (now % 20 < 1) {
+                const fps = Math.round(1000 / dt);
+                document.getElementById(elementId).innerText = fps > 60 ? 60 : fps;
+            }
         }
-    }
-};
 
-/* --- UNIVERSAL KEYBOARD CONTROLS (ARROWS + WASD) --- */
-window.addEventListener('keydown', e => {
-    if(!Snake.active) return;
-    const key = e.key;
+        /* --- SNAKE ENGINE --- */
+        const snake = {
+            canvas: document.getElementById('snakeCanvas'),
+            ctx: document.getElementById('snakeCanvas').getContext('2d'),
+            body: [], apple: {x: 0, y: 0},
+            dir: 'RIGHT', nextDir: 'RIGHT',
+            score: 0, active: false, lastTick: 0,
 
-    // Up
-    if((key === "ArrowUp" || key.toLowerCase() === "w") && Snake.dir.y === 0) 
-        Snake.dir = {x:0, y:-1};
-    // Down
-    if((key === "ArrowDown" || key.toLowerCase() === "s") && Snake.dir.y === 0) 
-        Snake.dir = {x:0, y:1};
-    // Left
-    if((key === "ArrowLeft" || key.toLowerCase() === "a") && Snake.dir.x === 0) 
-        Snake.dir = {x:-1, y:0};
-    // Right
-    if((key === "ArrowRight" || key.toLowerCase() === "d") && Snake.dir.x === 0) 
-        Snake.dir = {x:1, y:0};
-});
-</script>
+            init() {
+                document.getElementById('snakeOverlay').style.display = 'none';
+                this.active = true;
+                this.body = [{x:200, y:200}, {x:180, y:200}, {x:160, y:200}];
+                this.dir = 'RIGHT'; this.nextDir = 'RIGHT';
+                this.score = 0;
+                this.spawnApple();
+                document.getElementById('snakeScore').innerText = "0";
+                term("Snake Engine: ACTIVE");
+                requestAnimationFrame((t) => this.run(t));
+            },
+            abort() { this.active = false; document.getElementById('snakeOverlay').style.display = 'none'; this.ctx.clearRect(0,0,400,400); term("Snake Engine: HALTED"); },
+            spawnApple() { this.apple = { x: Math.floor(Math.random()*20)*20, y: Math.floor(Math.random()*20)*20 }; },
+            setDir(d) { if(d==='UP'&&this.dir!=='DOWN') this.nextDir='UP'; if(d==='DOWN'&&this.dir!=='UP') this.nextDir='DOWN'; if(d==='LEFT'&&this.dir!=='RIGHT') this.nextDir='LEFT'; if(d==='RIGHT'&&this.dir!=='LEFT') this.nextDir='RIGHT'; },
+            run(t) {
+                if(!this.active) return;
+                updateFPS(t, 'snakeFPS');
+                if(t - this.lastTick > 110) { this.lastTick = t; this.update(); }
+                this.draw();
+                requestAnimationFrame((t) => this.run(t));
+            },
+            update() {
+                this.dir = this.nextDir;
+                const head = {...this.body[0]};
+                if(this.dir==='UP') head.y-=20; if(this.dir==='DOWN') head.y+=20; if(this.dir==='LEFT') head.x-=20; if(this.dir==='RIGHT') head.x+=20;
+                if(head.x<0) head.x=380; if(head.x>=400) head.x=0; if(head.y<0) head.y=380; if(head.y>=400) head.y=0;
+                if(this.body.some(s=>s.x===head.x&&s.y===head.y)) { 
+                    this.score = 0; 
+                    document.getElementById('snakeScore').innerText = "0";
+                    this.active=false; 
+                    document.getElementById('snakeOverlay').style.display='flex'; 
+                    return; 
+                }
+                this.body.unshift(head);
+                if(head.x===this.apple.x && head.y===this.apple.y) { this.score+=10; document.getElementById('snakeScore').innerText=this.score; this.spawnApple(); }
+                else this.body.pop();
+            },
+            draw() {
+                const c = this.ctx; c.fillStyle='#000'; c.fillRect(0,0,400,400);
+                c.fillStyle='#ff3131'; c.beginPath(); c.arc(this.apple.x+10,this.apple.y+10,8,0,Math.PI*2); c.fill();
+                this.body.forEach((s,i) => { c.fillStyle=(i===0)?'#00f2ff':'#006677'; c.fillRect(s.x+1,s.y+1,18,18); });
+            }
+        };
+
+        /* --- MINESWEEPER ENGINE --- */
+        const mines = {
+            score: 0,
+            active: false,
+            init() {
+                this.score = 0; 
+                this.active = true;
+                document.getElementById('mineOverlay').style.display = 'none';
+                document.getElementById('mineScore').innerText = "0";
+                const g = document.getElementById('mGrid'); g.innerHTML = '';
+                for(let i=0; i<64; i++) {
+                    const t = document.createElement('div');
+                    t.className = 'tile';
+                    t.onclick = () => this.click(t);
+                    g.appendChild(t);
+                }
+                term("Minesweeper Matrix: ACTIVE");
+                requestAnimationFrame((t) => this.mon(t));
+            },
+            click(t) {
+                if(!this.active || t.style.background === 'rgb(34, 34, 34)') return;
+                if(Math.random() < 0.15) {
+                    t.innerText = '💣'; t.style.background = '#ff3131';
+                    this.score = 0; document.getElementById('mineScore').innerText = "0";
+                    this.active = false;
+                    document.getElementById('mineOverlay').style.display = 'flex';
+                    term("SYSTEM BREACHED.");
+                } else {
+                    t.innerText = Math.floor(Math.random()*4);
+                    t.style.background = '#222'; t.style.color = '#39ff14';
+                    this.score += 5;
+                    document.getElementById('mineScore').innerText = this.score;
+                }
+            },
+            quit() { 
+                this.active = false; this.score = 0;
+                document.getElementById('mineScore').innerText = "0";
+                document.getElementById('mineOverlay').style.display='none'; 
+                document.getElementById('mGrid').innerHTML=''; 
+                term("Minesweeper Matrix: HALTED");
+            },
+            mon(t) { if(this.active) { updateFPS(t, 'mineFPS'); requestAnimationFrame((t)=>this.mon(t)); } }
+        };
+
+        /* --- GESTURES --- */
+        let sx=0, sy=0;
+        document.getElementById('snakeTouch').addEventListener('touchstart', e => { sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, {passive:true});
+        document.getElementById('snakeTouch').addEventListener('touchend', e => {
+            let dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+            if(Math.abs(dx)>Math.abs(dy)) snake.setDir(dx>0?'RIGHT':'LEFT');
+            else snake.setDir(dy>0?'DOWN':'UP');
+        }, {passive:true});
+    </script>
 </body>
 </html>
