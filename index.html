@@ -1,505 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAVISH | SYSTEM DETECTOR & LUDO</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=JetBrains+Mono:wght@500&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>KAVISH ARCHITECT | HUB</title>
 
-        :root {
-            --neon-blue: #00f3ff;
-            --neon-pink: #bc13fe;
-            --neon-green: #39ff14;
-            --neon-red: #ff073a;
-            --neon-yellow: #fff200;
-            --bg: #050508;
-            --panel: rgba(10, 10, 15, 0.95);
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Share+Tech+Mono&display=swap');
 
-        body {
-            margin: 0;
-            background: var(--bg);
-            color: white;
-            font-family: 'JetBrains Mono', monospace;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+:root {
+    --neon-blue:#00f3ff;
+    --neon-pink:#bc13fe;
+    --bg-dark:#020208;
+}
 
-        .container {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+* { box-sizing:border-box; user-select:none; }
 
-        .terminal {
-            width: 90%;
-            max-width: 600px;
-            background: var(--panel);
-            border: 1px solid #1a1a2e;
-            padding: 30px;
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.1);
-            position: relative;
-            margin: 20px auto;
-        }
+body {
+    margin:0;
+    background:var(--bg-dark);
+    font-family:'Share Tech Mono', monospace;
+    overflow:hidden;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    color:white;
+}
 
-        .terminal::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-        }
+/* ================= HEADER ================= */
+#trademark-header {
+    width:100%;
+    padding:15px;
+    text-align:center;
+    font-family:'Syncopate';
+    font-size:1.2rem;
+    letter-spacing:5px;
+    border-bottom:2px solid #fff;
+    animation:rgbShift 3s linear infinite;
+    background:#000;
+}
 
-        h1 {
-            font-family: 'Syncopate';
-            font-size: 1.4rem;
-            color: var(--neon-blue);
-            margin: 0 0 20px;
-            letter-spacing: 3px;
-            text-align: center;
-        }
+@keyframes rgbShift {
+    0%{color:red;border-color:red}
+    33%{color:lime;border-color:lime}
+    66%{color:blue;border-color:blue}
+    100%{color:red;border-color:red}
+}
 
-        .glitch {
-            color: var(--neon-pink);
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--neon-pink);
-            animation: glitch 1.5s infinite;
-        }
+/* ================= HUB ================= */
+.hub-container {
+    flex:1;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:20px;
+    gap:20px;
+    flex-wrap:wrap;
+    overflow:auto;
+}
 
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 var(--neon-blue); }
-            20% { text-shadow: -2px 0 var(--neon-pink); }
-            40% { text-shadow: 2px 0 var(--neon-blue); }
-            60% { text-shadow: -2px 0 var(--neon-pink); }
-            80% { text-shadow: 2px 0 var(--neon-blue); }
-            100% { text-shadow: 0 0 10px var(--neon-pink); }
-        }
+.game-card {
+    background:#08080c;
+    border:1px solid #1a1a2e;
+    padding:20px;
+    border-radius:8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    box-shadow:0 0 20px rgba(0,0,0,.6);
+}
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
+.game-title {
+    font-family:'Syncopate';
+    font-size:.75rem;
+    color:#777;
+    margin-bottom:15px;
+    letter-spacing:2px;
+}
 
-        .info-item {
-            border-left: 3px solid #222;
-            padding-left: 15px;
-            transition: 0.3s;
-        }
+/* ================= SNAKE ================= */
+#snakeCanvas { background:#000; border:1px solid #333 }
 
-        .info-item.active {
-            border-left-color: var(--neon-pink);
-        }
+/* ================= MINES ================= */
+#minefield {
+    display:grid;
+    grid-template-columns:repeat(8,30px);
+    gap:3px;
+}
+.cell {
+    width:30px;
+    height:30px;
+    background:#1a1a1a;
+    text-align:center;
+    line-height:30px;
+    font-size:.9rem;
+    cursor:pointer;
+}
 
-        .label {
-            display: block;
-            font-size: 0.7rem;
-            color: #555;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
+/* ================= LUDO ================= */
+#ludoBoard {
+    display:grid;
+    grid-template-columns:repeat(5,40px);
+    gap:2px;
+    margin-bottom:10px;
+}
+.ludoCell {
+    width:40px;
+    height:40px;
+    background:#111;
+    border:1px solid #222;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+}
+.red { color:red }
+.green { color:lime }
 
-        .value {
-            font-size: 1.1rem;
-            color: #eee;
-            letter-spacing: 1px;
-        }
+#diceBtn {
+    background:none;
+    border:1px solid #444;
+    color:#ccc;
+    padding:5px 10px;
+    cursor:pointer;
+    margin-top:8px;
+}
 
-        #device-icon {
-            font-size: 4rem;
-            margin: 0 auto 20px;
-            display: block;
-            text-align: center;
-        }
-
-        /* Ludo Section */
-        #ludo-section {
-            display: none;
-            width: 90%;
-            max-width: 700px;
-            margin: 20px auto;
-        }
-
-        .game-header {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .status {
-            font-size: 1.2rem;
-            margin: 10px 0;
-            color: var(--neon-blue);
-        }
-
-        .dice-area {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        #dice {
-            font-size: 4rem;
-            margin: 10px;
-            color: var(--neon-pink);
-            text-shadow: 0 0 15px var(--neon-pink);
-        }
-
-        .button-neon {
-            background: transparent;
-            border: 2px solid var(--neon-blue);
-            color: var(--neon-blue);
-            padding: 10px 25px;
-            font-size: 1rem;
-            margin: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .button-neon:hover {
-            background: var(--neon-blue);
-            color: black;
-            box-shadow: 0 0 20px var(--neon-blue);
-        }
-
-        .button-neon.abort { border-color: var(--neon-red); color: var(--neon-red); }
-        .button-neon.abort:hover { background: var(--neon-red); color: black; }
-
-        #board {
-            width: 100%;
-            max-width: 500px;
-            aspect-ratio: 1 / 1;
-            margin: 20px auto;
-            background: #0a0a15;
-            border: 2px solid var(--neon-pink);
-            box-shadow: 0 0 30px rgba(188, 19, 254, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .path {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                #111 0,
-                #111 10px,
-                #1a1a2e 10px,
-                #1a1a2e 20px
-            );
-        }
-
-        .token {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            position: absolute;
-            border: 3px solid white;
-            box-shadow: 0 0 15px white;
-            transition: all 0.4s ease;
-        }
-
-        #token-red   { background: var(--neon-red);   box-shadow: 0 0 20px var(--neon-red); }
-        #token-green { background: var(--neon-green); box-shadow: 0 0 20px var(--neon-green); }
-
-        .home {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            font-weight: bold;
-            box-shadow: inset 0 0 20px black;
-        }
-
-        #home-red   { bottom: 10px; left: 10px;  background: rgba(255,7,58,0.2);  color: var(--neon-red); }
-        #home-green { top: 10px;   right: 10px; background: rgba(57,255,20,0.2); color: var(--neon-green); }
-
-        .color-choice {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .color-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid white;
-            margin: 12px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .color-btn.selected {
-            transform: scale(1.25);
-            box-shadow: 0 0 25px white;
-        }
-
-        #winner-screen {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(5,5,8,0.95);
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-
-        #winner-text {
-            font-size: 3rem;
-            margin: 20px;
-            text-align: center;
-            animation: glitch 2s infinite;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 1.1rem; }
-            #board { max-width: 380px; }
-            .token { width: 22px; height: 22px; }
-        }
-    </style>
+/* ================= FOOTER ================= */
+#system-footer {
+    background:#000;
+    padding:6px;
+    border-top:1px solid #222;
+    font-size:.65rem;
+    text-align:center;
+    color:#555;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
+<div id="trademark-header">KAVISHFORTECH ARCHITECT</div>
 
-        <!-- Original System Detector -->
-        <div class="terminal" id="detector">
-            <span id="device-icon">🔍</span>
-            <h1>SYSTEM_ARCHITECTURE_SCAN</h1>
-            
-            <div class="info-grid">
-                <div class="info-item active">
-                    <span class="label">Detected Device</span>
-                    <span class="value" id="device-type">ANALYZING...</span>
-                </div>
-                
-                <div class="info-item">
-                    <span class="label">Operating System</span>
-                    <span class="value" id="os-name">...</span>
-                </div>
+<div class="hub-container">
 
-                <div class="info-item">
-                    <span class="label">Hardware Resolution</span>
-                    <span class="value" id="screen-res">...</span>
-                </div>
+<!-- ================= SNAKE ================= -->
+<div class="game-card">
+<div class="game-title">NEON_SNAKE.EXE</div>
+<canvas id="snakeCanvas" width="240" height="240"></canvas>
+</div>
 
-                <div class="info-item">
-                    <span class="label">Browser Agent</span>
-                    <span class="value" id="browser-agent" style="font-size: 0.7rem; color: #444;">...</span>
-                </div>
-            </div>
-        </div>
+<!-- ================= MINES ================= -->
+<div class="game-card">
+<div class="game-title">MINE_SWEEPER.LOGIC</div>
+<div id="minefield"></div>
+<button onclick="resetMines()">RELOAD GRID</button>
+</div>
 
-        <!-- Ludo Game Section -->
-        <div id="ludo-section">
-            <div class="terminal">
-                <h1 class="glitch">LUDO NEON</h1>
+<!-- ================= LUDO ================= -->
+<div class="game-card">
+<div class="game-title">LUDO_2P.SYS</div>
+<div id="ludoBoard"></div>
+<div id="turnInfo">TURN: 🔴</div>
+<button id="diceBtn">ROLL DICE</button>
+</div>
 
-                <div class="game-header">
-                    <div class="status" id="turn-status">Choose your color to begin</div>
-                </div>
+</div>
 
-                <div class="color-choice" id="color-select">
-                    <div class="color-btn" style="background: var(--neon-red);"   onclick="selectColor('red')"></div>
-                    <div class="color-btn" style="background: var(--neon-green);" onclick="selectColor('green')"></div>
-                    <!-- You can add blue/yellow later if you want 4 colors -->
-                </div>
+<div id="system-footer">INITIALIZING...</div>
 
-                <div class="dice-area">
-                    <div id="dice">🎲</div>
-                    <button class="button-neon" id="rollBtn" onclick="rollDice()" disabled>ROLL DICE</button>
-                    <button class="button-neon abort" onclick="abortGame()">ABORT GAME</button>
-                </div>
+<script>
+/* ================= SYSTEM DETECTION ================= */
+const ua = navigator.userAgent;
+let DEVICE="DESKTOP";
+if(/Android/i.test(ua)) DEVICE="ANDROID";
+if(/iPhone|iPad|iPod/i.test(ua)) DEVICE="IOS";
 
-                <div id="board">
-                    <div class="path"></div>
-                    <div class="home" id="home-red">HOME</div>
-                    <div class="home" id="home-green">HOME</div>
-                    <div class="token" id="token-red"   style="left:20px; bottom:20px;"></div>
-                    <div class="token" id="token-green" style="left:calc(100% - 48px); top:20px;"></div>
-                </div>
-            </div>
-        </div>
+document.getElementById("system-footer").innerText =
+`DEVICE:${DEVICE} | ${innerWidth}x${innerHeight}`;
 
-        <!-- Winner Screen -->
-        <div id="winner-screen">
-            <h1 id="winner-text"></h1>
-            <button class="button-neon" onclick="restartGame()">RESTART</button>
-            <button class="button-neon abort" onclick="quitToStart()">QUIT</button>
-        </div>
+/* ================= SNAKE ================= */
+const ctx=document.getElementById("snakeCanvas").getContext("2d");
+let snake=[{x:10,y:10}],dir={x:1,y:0},food={x:5,y:5};
 
-    </div>
+function snakeStep(){
+let h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+if(h.x<0)h.x=23;if(h.x>23)h.x=0;
+if(h.y<0)h.y=23;if(h.y>23)h.y=0;
+snake.unshift(h);
+if(h.x===food.x&&h.y===food.y)
+food={x:Math.random()*24|0,y:Math.random()*24|0};
+else snake.pop();
 
-    <script>
-        // ── SYSTEM DETECTOR (unchanged) ────────────────────────────────────────
-        function runSystemScan() {
-            const ua = navigator.userAgent;
-            const platform = navigator.platform || "";
-            const vendor = navigator.vendor || "";
-            
-            let deviceType = "LAPTOP / DESKTOP";
-            let osName = "UNKNOWN SYSTEM";
-            let icon = "💻";
+ctx.fillStyle="#000";ctx.fillRect(0,0,240,240);
+ctx.fillStyle="#0ff";snake.forEach(s=>ctx.fillRect(s.x*10,s.y*10,9,9));
+ctx.fillStyle="#f0f";ctx.fillRect(food.x*10,food.y*10,9,9);
+}
+setInterval(snakeStep,100);
 
-            const isIOS = /iPad|iPhone|iPod/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-            const isAndroid = /Android/i.test(ua);
+if(DEVICE==="DESKTOP"){
+addEventListener("keydown",e=>{
+if(e.key==="ArrowUp"&&dir.y===0)dir={x:0,y:-1};
+if(e.key==="ArrowDown"&&dir.y===0)dir={x:0,y:1};
+if(e.key==="ArrowLeft"&&dir.x===0)dir={x:-1,y:0};
+if(e.key==="ArrowRight"&&dir.x===0)dir={x:1,y:0};
+});
+}
 
-            if (isIOS) {
-                deviceType = "iOS DEVICE";
-                osName = "APPLE iOS";
-                icon = "📱";
-            } else if (isAndroid) {
-                deviceType = "ANDROID MOBILE";
-                osName = "GOOGLE ANDROID";
-                icon = "🤖";
-            } else {
-                if (/Windows/i.test(ua)) osName = "WINDOWS OS";
-                else if (/Macintosh/i.test(ua)) osName = "macOS";
-                else if (/Linux/i.test(ua)) osName = "LINUX DISTRO";
-                deviceType = "LAPTOP / WORKSTATION";
-                icon = "💻";
-            }
+/* ================= MINES ================= */
+function resetMines(){
+const f=document.getElementById("minefield");f.innerHTML="";
+for(let i=0;i<64;i++){
+let c=document.createElement("div");
+c.className="cell";
+c.onclick=()=>c.innerText=Math.random()>.85?"💣":Math.random()*3|0;
+f.appendChild(c);
+}}
+resetMines();
 
-            document.getElementById('device-type').innerText = deviceType;
-            document.getElementById('device-type').classList.add('glitch');
-            document.getElementById('os-name').innerText = osName;
-            document.getElementById('device-icon').innerText = icon;
-            document.getElementById('screen-res').innerText = `${window.screen.width} x ${window.screen.height}`;
-            document.getElementById('browser-agent').innerText = ua;
-        }
-        window.onload = runSystemScan;
+/* ================= LUDO ================= */
+const board=document.getElementById("ludoBoard");
+let pos=[0,0],turn=0;
 
-        // ── LUDO GAME LOGIC ─────────────────────────────────────────────────────
-        let gameActive = false;
-        let currentPlayer = null; // 'red' or 'green'
-        let playerColor = null;
-        let diceValue = 0;
-        let positions = { red: 0, green: 0 }; // 0 = start, 1-52 = path, 53+ = home stretch
-        const pathLength = 52; // classic ludo path length before home
+for(let i=0;i<25;i++){
+let d=document.createElement("div");
+d.className="ludoCell";
+board.appendChild(d);
+}
 
-        function selectColor(color) {
-            playerColor = color;
-            currentPlayer = 'red'; // Red starts
-            document.getElementById('turn-status').innerText = `Player RED starts → Roll Dice`;
-            document.getElementById('rollBtn').disabled = false;
-            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
-            document.getElementById('color-select').style.display = 'none';
-        }
+function drawLudo(){
+[...board.children].forEach(c=>c.innerText="");
+board.children[pos[0]].innerText="🔴";
+board.children[pos[1]].innerText="🟢";
+}
 
-        function rollDice() {
-            if (!gameActive) {
-                gameActive = true;
-            }
-            if (currentPlayer !== playerColor) return;
+drawLudo();
 
-            diceValue = Math.floor(Math.random() * 6) + 1;
-            document.getElementById('dice').innerText = diceValue;
+document.getElementById("diceBtn").onclick=()=>{
+let roll=1+Math.random()*6|0;
+pos[turn]+=roll;
+if(pos[turn]>=24){
+alert((turn===0?"RED":"GREEN")+" WINS");
+pos=[0,0];
+}
+turn=1-turn;
+document.getElementById("turnInfo").innerText=
+"TURN: "+(turn===0?"🔴":"🟢");
+drawLudo();
+};
+</script>
 
-            moveToken(currentPlayer, diceValue);
-
-            // Check win
-            if (positions[currentPlayer] >= pathLength + 1) {
-                showWinner(currentPlayer.toUpperCase());
-                return;
-            }
-
-            // Switch turn
-            currentPlayer = currentPlayer === 'red' ? 'green' : 'red';
-            document.getElementById('turn-status').innerText = `Turn: ${currentPlayer.toUpperCase()}`;
-        }
-
-        function moveToken(player, steps) {
-            positions[player] += steps;
-
-            let pos = positions[player];
-            let left, top;
-
-            // Very simplified path visualization (clockwise square path)
-            if (pos <= 13) { // bottom row right
-                left = 20 + pos * 35;
-                top  = 'calc(100% - 60px)';
-            } else if (pos <= 26) { // right column up
-                left = 'calc(100% - 60px)';
-                top  = 'calc(100% - 60px - ' + ((pos-13)*35) + 'px)';
-            } else if (pos <= 39) { // top row left
-                left = 'calc(100% - 60px - ' + ((pos-26)*35) + 'px)';
-                top  = 20 + 'px';
-            } else if (pos <= 52) { // left column down
-                left = 20 + 'px';
-                top  = 20 + (pos-39)*35 + 'px';
-            } else {
-                // Home
-                left = player === 'red' ? '30px' : 'calc(100% - 110px)';
-                top  = player === 'red' ? 'calc(100% - 110px)' : '30px';
-            }
-
-            document.getElementById(`token-${player}`).style.left = left;
-            document.getElementById(`token-${player}`).style.top  = top;
-
-            // Simple kill logic
-            if (pos < pathLength && positions.red === positions.green && player !== currentPlayer) {
-                positions[currentPlayer === 'red' ? 'green' : 'red'] = 0;
-                document.getElementById(`token-${currentPlayer === 'red' ? 'green' : 'red'}`).style.left = currentPlayer === 'red' ? 'calc(100% - 48px)' : '20px';
-                document.getElementById(`token-${currentPlayer === 'red' ? 'green' : 'red'}`).style.top = currentPlayer === 'red' ? '20px' : 'calc(100% - 60px)';
-                document.getElementById('turn-status').innerText += " - KILL!";
-            }
-        }
-
-        function showWinner(winner) {
-            document.getElementById('winner-text').innerText = `${winner} WINS!`;
-            document.getElementById('winner-text').style.color = winner === 'RED' ? 'var(--neon-red)' : 'var(--neon-green)';
-            document.getElementById('winner-screen').style.display = 'flex';
-            document.getElementById('rollBtn').disabled = true;
-        }
-
-        function abortGame() {
-            if (confirm("Abort current game?")) {
-                resetGame();
-                document.getElementById('ludo-section').style.display = 'none';
-                document.getElementById('detector').style.display = 'block';
-            }
-        }
-
-        function restartGame() {
-            document.getElementById('winner-screen').style.display = 'none';
-            resetGame();
-        }
-
-        function quitToStart() {
-            document.getElementById('winner-screen').style.display = 'none';
-            document.getElementById('ludo-section').style.display = 'none';
-            document.getElementById('detector').style.display = 'block';
-            resetGame();
-        }
-
-        function resetGame() {
-            gameActive = false;
-            currentPlayer = null;
-            playerColor = null;
-            positions = { red: 0, green: 0 };
-            document.getElementById('dice').innerText = '🎲';
-            document.getElementById('turn-status').innerText = 'Choose your color to begin';
-            document.getElementById('rollBtn').disabled = true;
-            document.getElementById('color-select').style.display = 'block';
-            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('selected'));
-
-            // Reset tokens position
-            document.getElementById('token-red').style.left = '20px';
-            document.getElementById('token-red').style.top  = 'calc(100% - 60px)';
-            document.getElementById('token-green').style.left = 'calc(100% - 48px)';
-            document.getElementById('token-green').style.top  = '20px';
-        }
-
-        // Optional: start Ludo after detection (you can add a button if you want)
-        // For now user can scroll down or add your own start button
-    </script>
 </body>
 </html>
